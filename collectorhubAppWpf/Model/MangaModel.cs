@@ -10,7 +10,7 @@ namespace Intermodular2DAMGrupoCInterfaces.Models
         private Guid _id;
         private string _title;
         private string _author;
-        private Guid _genreId;
+        private long _genreId;
         private int _chapters;
         private bool _completed;
 
@@ -36,7 +36,7 @@ namespace Intermodular2DAMGrupoCInterfaces.Models
         }
 
         [JsonProperty("genreId")]
-        public Guid GenreId
+        public long GenreId
         {
             get { return _genreId; }
             set { _genreId = value; OnPropertyChanged(nameof(GenreId)); }
