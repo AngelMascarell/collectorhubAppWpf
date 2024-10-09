@@ -9,7 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\Images\" />
+    <None Remove="Resources\Images\MangaClimber.jpg" />
+    <None Remove="Resources\Images\mas.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Images\MangaClimber.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\mas.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +28,9 @@
 
   <ItemGroup>
     <Compile Update="View\CreateGenreView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\InicioView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

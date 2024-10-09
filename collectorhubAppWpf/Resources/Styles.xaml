@@ -1,4 +1,136 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
+    <!-- Colores principales -->
+    <Color x:Key="PrimaryColor1">#bf9cfc</Color>
+    <!-- 191,156,252 -->
+    <Color x:Key="PrimaryColor2">#fc9fff</Color>
+    <!-- 252,159,255 -->
+    <Color x:Key="PrimaryColor3">#ff81e3</Color>
+    <!-- 255,129,227 -->
+    <Color x:Key="PrimaryColor4">#ff62b4</Color>
+    <!-- 255,98,180 -->
+    <Color x:Key="PrimaryColor5">#ff6568</Color>
+    <!-- 255,101,104 -->
+
+    <!-- Brushes -->
+    <SolidColorBrush x:Key="PrimaryBrush1" Color="{StaticResource PrimaryColor1}"/>
+    <SolidColorBrush x:Key="PrimaryBrush2" Color="{StaticResource PrimaryColor2}"/>
+    <SolidColorBrush x:Key="PrimaryBrush3" Color="{StaticResource PrimaryColor3}"/>
+    <SolidColorBrush x:Key="PrimaryBrush4" Color="{StaticResource PrimaryColor4}"/>
+    <SolidColorBrush x:Key="PrimaryBrush5" Color="{StaticResource PrimaryColor5}"/>
+
+    <!-- Fondo y textos -->
+    <SolidColorBrush x:Key="BackgroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="TextBrush" Color="Black"/>
+    <SolidColorBrush x:Key="ButtonTextBrush" Color="White"/>
+
+    <!-- Estilo para TextBlocks -->
+    <Style TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource TextBrush}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
+    <!-- Estilo para botones del header -->
+    <Style x:Key="HeaderButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryBrush3}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush4}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        Padding="{TemplateBinding Padding}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!-- Cambiar color al pasar el ratón -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource PrimaryBrush2}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush5}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="HeaderCollectorButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryBrush4}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
+        <Setter Property="FontSize" Value="23"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Padding" Value="10,5"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush1}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="5"
+                        Padding="{TemplateBinding Padding}">
+                        <!-- Aplica el Padding -->
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!-- Cambiar color al pasar el ratón -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource PrimaryBrush2}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush5}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <!-- Estilo para el botón de búsqueda -->
+    <Style x:Key="SearchButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource PrimaryBrush4}"/>
+        <Setter Property="Foreground" Value="{StaticResource ButtonTextBrush}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Padding" Value="8,4"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush5}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <!-- Cambiar color al pasar el ratón -->
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource PrimaryBrush2}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
