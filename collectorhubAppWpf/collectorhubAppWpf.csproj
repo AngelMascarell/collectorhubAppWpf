@@ -9,11 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\BackgroundLogin.png" />
+    <None Remove="Resources\Images\ButtonLogin.png" />
+    <None Remove="Resources\Images\Inicio.png" />
+    <None Remove="Resources\Images\LogoBueno.png" />
     <None Remove="Resources\Images\MangaClimber.jpg" />
     <None Remove="Resources\Images\mas.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\Images\BackgroundLogin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ButtonLogin.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Inicio.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\LogoBueno.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Images\MangaClimber.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -28,6 +44,9 @@
 
   <ItemGroup>
     <Compile Update="View\CreateGenreView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="View\InicioView - Copia.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\InicioView.xaml.cs">

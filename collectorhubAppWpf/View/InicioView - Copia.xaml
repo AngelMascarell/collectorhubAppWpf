@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:collectorhubAppWpf.View"
         mc:Ignorable="d"
-        Title="Inicio" Height="1080" Width="1440">
+        Title="Inicio" Height="1080" Width="1920">
 
     <Window.Resources>
         <ResourceDictionary>
