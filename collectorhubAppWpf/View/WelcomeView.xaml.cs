@@ -1,5 +1,4 @@
-﻿using Intermodular2DAMGrupoCInterfaces.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,15 +16,13 @@ using System.Windows.Shapes;
 namespace collectorhubAppWpf.View
 {
     /// <summary>
-    /// Lógica de interacción para CreateMangaView.xaml
+    /// Lógica de interacción para WelcomeView.xaml
     /// </summary>
-    public partial class CreateMangaView : UserControl
+    public partial class WelcomeView : UserControl
     {
-        public CreateMangaView()
+        public WelcomeView()
         {
             InitializeComponent();
-            DataContext = new MangaViewModel();
-
         }
     }
 }

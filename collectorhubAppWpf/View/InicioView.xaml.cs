@@ -23,29 +23,8 @@ namespace collectorhubAppWpf.View
         public InicioView()
         {
             InitializeComponent();
-
-            SearchTextBox.Text = "Buscar manga...";
-            SearchTextBox.Foreground = new SolidColorBrush(Colors.Gray);
+            DataContext = new InicioViewModel();
         }
-
-        private void SearchTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (SearchTextBox.Text == "Buscar manga...")
-            {
-                SearchTextBox.Text = string.Empty; 
-                SearchTextBox.Foreground = new SolidColorBrush(Colors.Black); 
-            }
-        }
-
-        private void SearchTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
-            {
-                SearchTextBox.Text = "Buscar manga..."; 
-                SearchTextBox.Foreground = new SolidColorBrush(Colors.Gray); 
-            }
-        }
-
 
     }
 }

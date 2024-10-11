@@ -1,5 +1,4 @@
-﻿using Intermodular2DAMGrupoCInterfaces.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,19 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace collectorhubAppWpf.View
 {
     /// <summary>
-    /// Lógica de interacción para CreateGenreView.xaml
+    /// Lógica de interacción para CreateGenreView1.xaml
     /// </summary>
-    public partial class CreateGenreView : Window
+    public partial class CreateGenreView : UserControl
     {
         public CreateGenreView()
         {
             InitializeComponent();
-            this.DataContext = new GenreViewModel();
         }
     }
 }
