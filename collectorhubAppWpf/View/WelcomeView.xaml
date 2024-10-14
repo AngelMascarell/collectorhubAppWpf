@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:collectorhubAppWpf.View"
+             xmlns:local="clr-namespace:collectorhubAppWpf.View" xmlns:wpfGif="http://wpfanimatedgif.codeplex.com"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1200">
     <Grid>
         <Image Source="/Resources/Images/backgroundHunter.jpg" Stretch="Fill" Opacity="0.4"/>
 
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFFFFFAA" Width="900" Height="650">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Background="#E0e838b1" Width="900" Height="650">
 
             <Image Source="/Resources/Images/backgroundHunter.jpg" Width="300" Height="150" HorizontalAlignment="Center" Margin="0,20,0,20"/>
 
@@ -31,6 +31,12 @@
                        Margin="0,20,0,30"
                        TextWrapping="Wrap"
                        Width="400"/>
+
+            <Image Grid.Row="0" Grid.Column="1" Height="340" HorizontalAlignment="Center" Stretch="UniformToFill">
+                <wpfGif:ImageBehavior.AnimatedSource>
+                    <BitmapImage UriSource="/Resources/Images/gifInicio.gif"/>
+                </wpfGif:ImageBehavior.AnimatedSource>
+            </Image>
         </StackPanel>
     </Grid>
 </UserControl>

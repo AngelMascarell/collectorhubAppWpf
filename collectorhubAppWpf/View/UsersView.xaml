@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="collectorhubAppWpf.View.UsersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:collectorhubAppWpf.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200">
+    <Grid Background="#FFF4F4F4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="1">
+            <TextBlock FontSize="40" FontWeight="Bold" FontFamily="Montserrat" VerticalAlignment="Center" Foreground="#e838b1" HorizontalAlignment="Center" Margin="25">Buscador</TextBlock>
+            <Border Background="#FFDAD8D8" Width="265" Height="629" CornerRadius="20" Padding="20,20,20,0">
+                <StackPanel>
+                    <TextBlock FontSize="14" Text="ID" Padding="0,0,0,7"/>
+                    <TextBox Height="30" Text="{Binding Id}" FontSize="16"/>
+                    <TextBlock FontSize="14" Text="Usuario" Padding="0,26,0,7"/>
+                    <TextBox Height="30" Text="{Binding Username}" FontSize="16"/>
+                    <TextBlock FontSize="14" Text="Correo electrónico" Padding="0,26,0,7"/>
+                    <TextBox Height="30" Text="{Binding Email}" FontSize="16"/>
+                    <TextBlock FontSize="14" Text="Fecha de nacimiento" Padding="0,26,0,7"/>
+                    <TextBox Height="30" Text="{Binding Birthdate}" FontSize="16"/>
+                    <TextBlock FontSize="14" Text="Fecha de registro" Padding="0,26,0,7"/>
+                    <TextBox Height="30" Text="{Binding RegisterDate}" FontSize="16" IsReadOnly="True"/>
+
+                    <Button FontFamily="Montserrat" FontSize="16" Background="#e838b1" Content="Buscar" BorderBrush="{x:Null}" Width="138" Height="36" Margin="0,30,0,0" Command="{Binding SearchCommand}">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="20"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontSize="40" FontWeight="Bold" FontFamily="Montserrat" VerticalAlignment="Center" Foreground="Black" Margin="60,25,0,0">Usuarios</TextBlock>
+            </StackPanel>
+
+            <DataGrid x:Name="datagridUsers" ItemsSource="{Binding CurrentPageUsers}" SelectedItem="{Binding UserSelected}" AutoGenerateColumns="False" GridLinesVisibility="None" HorizontalAlignment="Stretch" CanUserAddRows="False" Margin="0,20,0,0">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="ID" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Id}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Usuario" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Username}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Email" Width="200">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Email}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Fecha de nacimiento" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding Birthdate, StringFormat='{}{0:yyyy-MM-dd}'}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Fecha de registro" Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="15" VerticalAlignment="Center" Text="{Binding RegisterDate, StringFormat='{}{0:yyyy-MM-dd}'}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Margin" Value="0 5"/>
+                    </Style>
+                </DataGrid.RowStyle>
+            </DataGrid>
+
+            <Button FontFamily="Montserrat" FontSize="16" Background="#FF68EB9C" Content="Nuevo Usuario" BorderBrush="{x:Null}" Width="138" Height="36" Margin="0,20,20,20" HorizontalAlignment="Right" Command="{Binding NavigateToAddUserCommand}">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="20"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

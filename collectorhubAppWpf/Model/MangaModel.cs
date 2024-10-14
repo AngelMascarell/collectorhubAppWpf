@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 
-namespace Intermodular2DAMGrupoCInterfaces.Models
+namespace collectorhubAppWpf.Model
 {
     public class MangaModel : BaseModel
     {
-        private Guid _id;
+        private long _id;
         private string _title;
         private string _author;
         private long _genreId;
@@ -15,7 +15,7 @@ namespace Intermodular2DAMGrupoCInterfaces.Models
         private bool _completed;
 
         [JsonProperty("id")]
-        public Guid Id
+        public long Id
         {
             get { return _id; }
             set { _id = value; OnPropertyChanged(nameof(Id)); }

@@ -8,11 +8,10 @@ using System.Windows.Input;
 using System.Windows;
 using System.Text;
 using System.IO;
-using Intermodular2DAMGrupoCInterfaces.Models;
 using MVVM.Commands;
-using collectorhubAppWpf.ViewModels;
+using collectorhubAppWpf.ViewModel;
 
-namespace Intermodular2DAMGrupoCInterfaces.ViewModels
+namespace collectorhubAppWpf.ViewModel
 {
     public class GenreViewModel : ViewModelBase
     {
@@ -63,21 +62,37 @@ namespace Intermodular2DAMGrupoCInterfaces.ViewModels
         // HTTP Methods
         public async Task CreateGenreAsync()
         {
-            var genreRequest = new GenreModel
+            try
             {
-                Name = Name
-            };
+                var genreRequest = new GenreModel
+                {
+                    Name = Name
+                };
 
-            var jsonContent = JsonConvert.SerializeObject(genreRequest);
-            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                var jsonContent = JsonConvert.SerializeObject(genreRequest);
+                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("genre", content);
-            response.EnsureSuccessStatusCode();
+                var response = await _httpClient.PostAsync("genre", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("El género ha sido creado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show($"Error al crear el género. Código de estado: {response.StatusCode}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ha ocurrido un error inesperado: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
         public async Task<GenreModel> GetGenreByIdAsync(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/genre/{id}");
+            var response = await _httpClient.GetAsync($"genre/{id}");
             response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
@@ -86,7 +101,7 @@ namespace Intermodular2DAMGrupoCInterfaces.ViewModels
 
         public async Task<List<GenreModel>> GetAllGenresAsync()
         {
-            var response = await _httpClient.GetAsync("api/genre");
+            var response = await _httpClient.GetAsync("genre");
             response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
@@ -104,13 +119,13 @@ namespace Intermodular2DAMGrupoCInterfaces.ViewModels
             var jsonContent = JsonConvert.SerializeObject(genreRequest);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"api/genre/{id}", content);
+            var response = await _httpClient.PutAsync($"genre/{id}", content);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteGenreAsync(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/genre/{id}");
+            var response = await _httpClient.DeleteAsync($"genre/{id}");
             response.EnsureSuccessStatusCode();
         }
 

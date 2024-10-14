@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 
-namespace Intermodular2DAMGrupoCInterfaces.Models
+namespace collectorhubAppWpf.Model
 {
     public class RateModel : BaseModel
     {

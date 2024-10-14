@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace collectorhubAppWpf.ViewModels
+namespace collectorhubAppWpf.ViewModel
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

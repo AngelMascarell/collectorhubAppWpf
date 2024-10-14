@@ -8,13 +8,12 @@ using System.Windows.Input;
 using System.Windows;
 using System.Text;
 using System.IO;
-using Intermodular2DAMGrupoCInterfaces.Models;
 using MVVM.Commands;
-using collectorhubAppWpf.ViewModels;
+using collectorhubAppWpf.ViewModel;
 using collectorhubAppWpf.View;
 using System.Windows.Controls;
 
-namespace Intermodular2DAMGrupoCInterfaces.ViewModels
+namespace collectorhubAppWpf.ViewModel
 {
     public class InicioViewModel : ViewModelBase
     {
@@ -49,7 +48,7 @@ namespace Intermodular2DAMGrupoCInterfaces.ViewModels
             ShowAddMangaViewCommand = new RelayCommand(param => ShowAddMangaView());
             //ShowCreateMangaListViewCommand = new RelayCommand(param => ShowCreateMangaListView());
             //ShowReviewsViewCommand = new RelayCommand(param => ShowReviewsView());
-            //ShowManageUsersViewCommand = new RelayCommand(param => ShowManageUsersView());
+            ShowManageUsersViewCommand = new RelayCommand(param => ShowManageUsersView());
             //ShowStatisticsViewCommand = new RelayCommand(param => ShowStatisticsView());
             ShowWelcomeViewCommand = new RelayCommand(param => ShowWelcomeView());
         }
@@ -81,7 +80,7 @@ namespace Intermodular2DAMGrupoCInterfaces.ViewModels
 
         private void ShowManageUsersView()
         {
-            //CurrentView = new ManageUsersView();
+            CurrentView = new UsersView();
         }
 
         private void ShowStatisticsView()

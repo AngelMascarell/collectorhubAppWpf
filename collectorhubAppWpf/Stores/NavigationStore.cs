@@ -1,11 +1,11 @@
-﻿using collectorhubAppWpf.ViewModels;
+﻿using collectorhubAppWpf.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Intermodular2DAMGrupoCInterfaces.Stores
+namespace collectorhubAppWpf.Stores
 {
     public class NavigationStore
     {

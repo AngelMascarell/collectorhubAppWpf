@@ -1,4 +1,4 @@
-﻿using Intermodular2DAMGrupoCInterfaces.ViewModels;
+﻿using collectorhubAppWpf.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

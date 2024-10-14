@@ -8,11 +8,10 @@ using System.Windows.Input;
 using System.Windows;
 using System.Text;
 using System.IO;
-using Intermodular2DAMGrupoCInterfaces.Models;
 using MVVM.Commands;
-using collectorhubAppWpf.ViewModels;
+using collectorhubAppWpf.ViewModel;
 
-namespace Intermodular2DAMGrupoCInterfaces.ViewModels
+namespace collectorhubAppWpf.ViewModel
 {
     public class MangaViewModel : ViewModelBase
     {
@@ -35,7 +34,7 @@ namespace Intermodular2DAMGrupoCInterfaces.ViewModels
         }
 
         // Properties
-        public Guid Id
+        public long Id
         {
             get { return _mangaModel.Id; }
             set

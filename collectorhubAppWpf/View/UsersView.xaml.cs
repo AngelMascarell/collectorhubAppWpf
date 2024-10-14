@@ -17,15 +17,14 @@ using System.Windows.Shapes;
 namespace collectorhubAppWpf.View
 {
     /// <summary>
-    /// Lógica de interacción para CreateMangaView.xaml
+    /// Lógica de interacción para UsersView.xaml
     /// </summary>
-    public partial class CreateMangaView : UserControl
+    public partial class UsersView : UserControl
     {
-        public CreateMangaView()
+        public UsersView()
         {
             InitializeComponent();
-            DataContext = new MangaViewModel();
-
+            DataContext = new UsersViewModel();
         }
     }
 }

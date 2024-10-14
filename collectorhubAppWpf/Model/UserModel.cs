@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
 
-namespace Intermodular2DAMGrupoCInterfaces.Models
+namespace collectorhubAppWpf.Model
 {
     public class UserModel : BaseModel
     {
-        private Guid _id;
+        private long _id;
         private string _username;
         private string _email;
         private DateTime _birthdate;
@@ -15,7 +15,7 @@ namespace Intermodular2DAMGrupoCInterfaces.Models
         private List<MangaModel> _mangas;
 
         [JsonProperty("id")]
-        public Guid Id
+        public long Id
         {
             get { return _id; }
             set { _id = value; OnPropertyChanged(nameof(Id)); }
