@@ -38,6 +38,9 @@ namespace collectorhubAppWpf.ViewModel
         public ICommand ShowStatisticsViewCommand { get; set; }
         public ICommand ShowWelcomeViewCommand { get; set; }
 
+        public ICommand NavigateToCreateUserCommand { get; }
+
+
         public InicioViewModel()
         {
             // Inicialmente mostramos el mensaje de bienvenida o una vista por defecto
@@ -51,6 +54,8 @@ namespace collectorhubAppWpf.ViewModel
             ShowManageUsersViewCommand = new RelayCommand(param => ShowManageUsersView());
             //ShowStatisticsViewCommand = new RelayCommand(param => ShowStatisticsView());
             ShowWelcomeViewCommand = new RelayCommand(param => ShowWelcomeView());
+            NavigateToCreateUserCommand = new RelayCommand(param => OpenCreateUserView());
+
         }
 
         private void ShowCreateGenreView()
@@ -66,6 +71,11 @@ namespace collectorhubAppWpf.ViewModel
         private void ShowAddMangaView()
         {
             CurrentView = new CreateMangaView();
+        }
+
+        private void OpenCreateUserView()
+        {
+            CurrentView = new CreateUserView(); // Cambiar a la vista de crear usuario
         }
 
         private void ShowCreateMangaListView()

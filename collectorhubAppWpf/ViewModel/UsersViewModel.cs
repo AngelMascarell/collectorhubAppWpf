@@ -11,6 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
+using System.Windows.Controls;
+using collectorhubAppWpf.View;
+using collectorhubAppWpf.Stores;
 
 namespace collectorhubAppWpf.ViewModel
 {
@@ -19,8 +22,12 @@ namespace collectorhubAppWpf.ViewModel
         private readonly HttpClient _httpClient;
         private ObservableCollection<UserModel> _users;
         private UserModel _userSelected;
+
+        private readonly NavigationStore _navigationStore;
+
+
         private int _currentPageIndex = 0;
-        private int _itemsPerPage = 8;
+        private int _itemsPerPage = 15;
 
         private long _guid;
         private String _userName;
@@ -32,12 +39,31 @@ namespace collectorhubAppWpf.ViewModel
         private List<MangaModel> _mangas;
 
 
+        private UserControl _currentView;
+        public UserControl CurrentView
+        {
+            get => _currentView;
+            set
+            {
+                _currentView = value;
+                OnPropertyChanged(nameof(CurrentView));
+            }
+        }
+
+        public ICommand NavigateToCreateUserCommand { get; }
+
 
         public UsersViewModel()
         {
             _httpClient = new HttpClient();
             LoadUsersAsync();
             SearchCommand = new RelayCommand(param => ExecuteSearchCommand());
+            NavigateToCreateUserCommand = new RelayCommand(param => NavigateToAddUser());
+        }
+
+        private void NavigateToAddUser()
+        {
+            CurrentView = new CreateUserView();
         }
 
         public ObservableCollection<UserModel> Users
@@ -153,6 +179,7 @@ namespace collectorhubAppWpf.ViewModel
         }
 
         public ICommand SearchCommand { get; }
+
 
         public ObservableCollection<UserModel> CurrentPageUsers
         {

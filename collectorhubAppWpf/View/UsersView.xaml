@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:collectorhubAppWpf.View"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1200">
+    
     <Grid Background="#FFF4F4F4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
@@ -92,7 +93,13 @@
                 </DataGrid.RowStyle>
             </DataGrid>
 
-            <Button FontFamily="Montserrat" FontSize="16" Background="#FF68EB9C" Content="Nuevo Usuario" BorderBrush="{x:Null}" Width="138" Height="36" Margin="0,20,20,20" HorizontalAlignment="Right" Command="{Binding NavigateToAddUserCommand}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Command="{Binding PreviousPageCommand}" Content="Página Anterior" Width="120" Height="30" Margin="5" />
+                <TextBlock Text="{Binding CurrentPage}" VerticalAlignment="Center" FontSize="16" Margin="10,0" />
+                <Button Command="{Binding NextPageCommand}" Content="Página Siguiente" Width="120" Height="30" Margin="5" />
+            </StackPanel>
+
+            <Button FontFamily="Montserrat" FontSize="16" Background="#FF68EB9C" Content="Nuevo Usuario" BorderBrush="{x:Null}" Width="138" Height="36" Margin="0,20,20,20" HorizontalAlignment="Right" Command="{Binding DataContext.NavigateToCreateUserCommand, RelativeSource={RelativeSource AncestorType=Window}}">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="20"/>
@@ -100,5 +107,7 @@
                 </Button.Resources>
             </Button>
         </StackPanel>
+        
+        <ContentControl Content="{Binding CurrentView}"  />
     </Grid>
 </UserControl>
