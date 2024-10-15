@@ -21,10 +21,10 @@ namespace collectorhubAppWpf.View
     /// </summary>
     public partial class CreateUserView : UserControl
     {
-        public CreateUserView()
+        public CreateUserView(InicioViewModel inicioViewModel)
         {
             InitializeComponent();
-            DataContext = new CreateUserViewModel();
+            DataContext = new CreateUserViewModel(inicioViewModel);
         }
     }
 }

@@ -44,17 +44,19 @@ namespace collectorhubAppWpf.ViewModel
         private UserModel _userSelected;
         public UserModel UserSelected
         {
-            get => _userSelected;
+            get { return _userSelected; }
             set
             {
-                _userSelected = value;
-                OnPropertyChanged(nameof(UserSelected));
+                if (_userSelected != value)
+                {
+                    _userSelected = value;
+                    OnPropertyChanged(nameof(UserSelected));
+                }
             }
         }
 
         public InicioViewModel()
         {
-            // Inicialmente mostramos el mensaje de bienvenida o una vista por defecto
             CurrentView = new WelcomeView();
 
             // Inicializamos los comandos
@@ -98,7 +100,7 @@ namespace collectorhubAppWpf.ViewModel
 
         private void OpenCreateUserView()
         {
-            CurrentView = new CreateUserView(); // Cambiar a la vista de crear usuario
+            CurrentView = new CreateUserView(this);
         }
 
         private void ShowCreateMangaListView()
@@ -113,6 +115,7 @@ namespace collectorhubAppWpf.ViewModel
 
         private void ShowManageUsersView()
         {
+            //UserSelected = null;
             CurrentView = new UsersView(this);
         }
 

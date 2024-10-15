@@ -66,6 +66,9 @@ namespace collectorhubAppWpf.ViewModel
         private readonly HttpClient _httpClient;
 
         private UserControl _currentView;
+
+        public InicioViewModel InicioViewModel { get; set; }
+
         public UserControl CurrentView
         {
             get => _currentView;
@@ -76,16 +79,19 @@ namespace collectorhubAppWpf.ViewModel
             }
         }
 
-        public CreateUserViewModel()
+        public CreateUserViewModel(InicioViewModel inicioViewModel)
         {
             _httpClient = new HttpClient();
             SaveCommand = new RelayCommand(async param => await SaveUser());
-            ShowManageUsersViewCommand = new RelayCommand(param => Cancel());
+            ShowManageUsersViewCommand = new RelayCommand(param => Cancel(new InicioViewModel()));
+
+            InicioViewModel = inicioViewModel;
         }
 
-        private void Cancel()
+        private void Cancel(InicioViewModel inicioViewModel)
         {
-            CurrentView = new UsersView(new InicioViewModel()); // Pasar 'this' como el InicioViewModel actual
+            
+            CurrentView = new UsersView(inicioViewModel); // Pasar 'this' como el InicioViewModel actual
         }
 
         private async Task SaveUser()
@@ -105,7 +111,7 @@ namespace collectorhubAppWpf.ViewModel
 
             try
             {
-                var response = await _httpClient.PostAsync("http://localhost:8080/user/new", content); // Cambia la URL por la de tu API
+                var response = await _httpClient.PostAsync("http://localhost:8080/user/new", content);
 
                 if (response.IsSuccessStatusCode)
                 {

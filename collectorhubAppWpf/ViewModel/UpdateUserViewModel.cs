@@ -68,15 +68,11 @@ namespace collectorhubAppWpf.ViewModel
         {
             if (selectedUser != null)
             {
-                // Inicializar las propiedades a partir del usuario seleccionado
                 Username = selectedUser.Username;
                 Email = selectedUser.Email;
                 Birthdate = selectedUser.Birthdate;
-                Password = selectedUser.Password; // Si es necesario
+                Password = selectedUser.Password;
             }
         }
-
-
-
     }
 }

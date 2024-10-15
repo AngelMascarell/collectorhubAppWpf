@@ -75,6 +75,7 @@ namespace collectorhubAppWpf.ViewModel
 
                 IsSearchPanelVisible = _currentView == null ? Visibility.Visible : Visibility.Collapsed;
                 IsUserListPanelVisible = _currentView == null ? Visibility.Visible : Visibility.Collapsed;
+
             }
         }
 
@@ -89,7 +90,7 @@ namespace collectorhubAppWpf.ViewModel
             LoadUsersAsync();
             SearchCommand = new RelayCommand(param => ExecuteSearchCommand());
             NavigateToCreateUserCommand = new RelayCommand(param => NavigateToAddUser());
-            NavigateToEditUserCommand = new RelayCommand(param => NavigateToUpdateUser());
+           // NavigateToEditUserCommand = new RelayCommand(param => NavigateToUpdateUser());
 
             InicioViewModel = inicioViewModel;
             UserSelected = null;
@@ -113,7 +114,7 @@ namespace collectorhubAppWpf.ViewModel
 
         private void NavigateToAddUser()
         {
-            CurrentView = new CreateUserView();
+            CurrentView = new CreateUserView(_inicioViewModel);
         }
 
         public ObservableCollection<UserModel> Users
@@ -129,13 +130,15 @@ namespace collectorhubAppWpf.ViewModel
 
         public UserModel UserSelected
         {
-            get => _userSelected;
+            get { return _userSelected; }
             set
             {
-                _userSelected = value;
-                OnPropertyChanged(nameof(UserSelected));
-
-                InicioViewModel.UserSelected = value; // Actualiza el UserSelected en InicioViewModel
+                if (_userSelected != value)
+                {
+                    _userSelected = value;
+                    InicioViewModel.UserSelected = value;
+                    OnPropertyChanged(nameof(UserSelected));
+                }
             }
         }
 
