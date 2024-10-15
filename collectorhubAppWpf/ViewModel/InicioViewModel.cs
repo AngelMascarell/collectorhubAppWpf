@@ -38,8 +38,19 @@ namespace collectorhubAppWpf.ViewModel
         public ICommand ShowStatisticsViewCommand { get; set; }
         public ICommand ShowWelcomeViewCommand { get; set; }
 
-        public ICommand NavigateToCreateUserCommand { get; }
+        public ICommand NavigateToCreateUserCommand { get; set; }
+        public ICommand NavigateToEditUserCommand { get; set; }
 
+        private UserModel _userSelected;
+        public UserModel UserSelected
+        {
+            get => _userSelected;
+            set
+            {
+                _userSelected = value;
+                OnPropertyChanged(nameof(UserSelected));
+            }
+        }
 
         public InicioViewModel()
         {
@@ -55,7 +66,19 @@ namespace collectorhubAppWpf.ViewModel
             //ShowStatisticsViewCommand = new RelayCommand(param => ShowStatisticsView());
             ShowWelcomeViewCommand = new RelayCommand(param => ShowWelcomeView());
             NavigateToCreateUserCommand = new RelayCommand(param => OpenCreateUserView());
+            NavigateToEditUserCommand = new RelayCommand(param => OpenUpdateUserView());
+        }
 
+        private void OpenUpdateUserView()
+        {
+            if (UserSelected != null)
+            {
+                CurrentView = new UpdateUserView(UserSelected);
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona un usuario para editar.");
+            }
         }
 
         private void ShowCreateGenreView()
@@ -90,7 +113,7 @@ namespace collectorhubAppWpf.ViewModel
 
         private void ShowManageUsersView()
         {
-            CurrentView = new UsersView();
+            CurrentView = new UsersView(this);
         }
 
         private void ShowStatisticsView()

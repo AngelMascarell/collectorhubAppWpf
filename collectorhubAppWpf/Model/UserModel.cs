@@ -10,6 +10,7 @@ namespace collectorhubAppWpf.Model
         private long _id;
         private string _username;
         private string _email;
+        private string _password;
         private DateTime _birthdate;
         private DateTime _registerDate;
         private List<MangaModel> _mangas;
@@ -47,6 +48,13 @@ namespace collectorhubAppWpf.Model
         {
             get { return _registerDate; }
             set { _registerDate = value; OnPropertyChanged(nameof(RegisterDate)); }
+        }
+
+        [JsonProperty("password")]
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; OnPropertyChanged(nameof(Password)); }
         }
 
         [JsonProperty("mangas")]

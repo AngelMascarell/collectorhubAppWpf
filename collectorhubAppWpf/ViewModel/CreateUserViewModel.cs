@@ -9,7 +9,7 @@ using System.Windows;
 using Newtonsoft.Json;
 using collectorhubAppWpf.Model;
 using System.Windows.Controls;
-using collectorhubAppWpf.View; // Asegúrate de agregar Newtonsoft.Json a tu proyecto
+using collectorhubAppWpf.View;
 
 namespace collectorhubAppWpf.ViewModel
 {
@@ -85,7 +85,7 @@ namespace collectorhubAppWpf.ViewModel
 
         private void Cancel()
         {
-            CurrentView = new UsersView();
+            CurrentView = new UsersView(new InicioViewModel()); // Pasar 'this' como el InicioViewModel actual
         }
 
         private async Task SaveUser()

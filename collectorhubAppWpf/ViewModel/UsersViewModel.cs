@@ -38,6 +38,31 @@ namespace collectorhubAppWpf.ViewModel
 
         private List<MangaModel> _mangas;
 
+        public InicioViewModel InicioViewModel { get; set; }
+
+
+        private Visibility _isSearchPanelVisible = Visibility.Visible;
+        public Visibility IsSearchPanelVisible
+        {
+            get { return _isSearchPanelVisible; }
+            set
+            {
+                _isSearchPanelVisible = value;
+                OnPropertyChanged(nameof(IsSearchPanelVisible));
+            }
+        }
+
+        private Visibility _isUserListPanelVisible = Visibility.Visible;
+        public Visibility IsUserListPanelVisible
+        {
+            get { return _isUserListPanelVisible; }
+            set
+            {
+                _isUserListPanelVisible = value;
+                OnPropertyChanged(nameof(IsUserListPanelVisible));
+            }
+        }
+
 
         private UserControl _currentView;
         public UserControl CurrentView
@@ -47,19 +72,44 @@ namespace collectorhubAppWpf.ViewModel
             {
                 _currentView = value;
                 OnPropertyChanged(nameof(CurrentView));
+
+                IsSearchPanelVisible = _currentView == null ? Visibility.Visible : Visibility.Collapsed;
+                IsUserListPanelVisible = _currentView == null ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
         public ICommand NavigateToCreateUserCommand { get; }
+        public ICommand NavigateToEditUserCommand { get; }
 
+        private readonly InicioViewModel _inicioViewModel;
 
-        public UsersViewModel()
+        public UsersViewModel(InicioViewModel inicioViewModel)
         {
             _httpClient = new HttpClient();
             LoadUsersAsync();
             SearchCommand = new RelayCommand(param => ExecuteSearchCommand());
             NavigateToCreateUserCommand = new RelayCommand(param => NavigateToAddUser());
+            NavigateToEditUserCommand = new RelayCommand(param => NavigateToUpdateUser());
+
+            InicioViewModel = inicioViewModel;
+            UserSelected = null;
         }
+
+        private void NavigateToUpdateUser()
+        {
+            if (UserSelected != null)
+            {
+                MessageBox.Show($"Usuario seleccionado: {UserSelected.Username}"); // Mensaje de depuración
+                _inicioViewModel.UserSelected = UserSelected;
+                CurrentView = new UpdateUserView(UserSelected);
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona un usuario para editar.");
+            }
+        }
+
+
 
         private void NavigateToAddUser()
         {
@@ -84,6 +134,8 @@ namespace collectorhubAppWpf.ViewModel
             {
                 _userSelected = value;
                 OnPropertyChanged(nameof(UserSelected));
+
+                InicioViewModel.UserSelected = value; // Actualiza el UserSelected en InicioViewModel
             }
         }
 

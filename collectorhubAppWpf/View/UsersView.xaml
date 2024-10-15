@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:collectorhubAppWpf.View"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1200">
-    
+
     <Grid Background="#FFF4F4F4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
@@ -16,7 +16,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" x:Name="SearchPanel" Visibility="{Binding IsSearchPanelVisible}">
             <TextBlock FontSize="40" FontWeight="Bold" FontFamily="Montserrat" VerticalAlignment="Center" Foreground="#e838b1" HorizontalAlignment="Center" Margin="25">Buscador</TextBlock>
             <Border Background="#FFDAD8D8" Width="265" Height="629" CornerRadius="20" Padding="20,20,20,0">
                 <StackPanel>
@@ -42,12 +42,12 @@
             </Border>
         </StackPanel>
 
-        <StackPanel Grid.Row="1" Grid.Column="1">
+        <StackPanel Grid.Row="1" Grid.Column="1" x:Name="UserListPanel" Visibility="{Binding IsUserListPanelVisible}">
             <StackPanel Orientation="Horizontal">
                 <TextBlock FontSize="40" FontWeight="Bold" FontFamily="Montserrat" VerticalAlignment="Center" Foreground="Black" Margin="60,25,0,0">Usuarios</TextBlock>
             </StackPanel>
 
-            <DataGrid x:Name="datagridUsers" ItemsSource="{Binding CurrentPageUsers}" SelectedItem="{Binding UserSelected}" AutoGenerateColumns="False" GridLinesVisibility="None" HorizontalAlignment="Stretch" CanUserAddRows="False" Margin="0,20,0,0">
+            <DataGrid x:Name="datagridUsers" ItemsSource="{Binding CurrentPageUsers}" SelectedItem="{Binding UserSelected, Mode=TwoWay}" SelectionChanged="OnUserSelectionChanged" AutoGenerateColumns="False" GridLinesVisibility="None" HorizontalAlignment="Stretch" CanUserAddRows="False" Margin="0,20,0,0">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="ID" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
@@ -99,15 +99,27 @@
                 <Button Command="{Binding NextPageCommand}" Content="Página Siguiente" Width="120" Height="30" Margin="5" />
             </StackPanel>
 
-            <Button FontFamily="Montserrat" FontSize="16" Background="#FF68EB9C" Content="Nuevo Usuario" BorderBrush="{x:Null}" Width="138" Height="36" Margin="0,20,20,20" HorizontalAlignment="Right" Command="{Binding DataContext.NavigateToCreateUserCommand, RelativeSource={RelativeSource AncestorType=Window}}">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="20"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button FontFamily="Montserrat" FontSize="16" Background="#ffe65d" Content="Editar Usuario" BorderBrush="{x:Null}" Width="138" Height="36" Margin="0,0,10,0" Command="{Binding DataContext.NavigateToEditUserCommand, RelativeSource={RelativeSource AncestorType=Window}}"  IsEnabled="{Binding UserSelected}">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button FontFamily="Montserrat" FontSize="16" Background="#FF68EB9C" Content="Nuevo Usuario" BorderBrush="{x:Null}" Width="138" Height="36" Command="{Binding NavigateToCreateUserCommand}" IsEnabled="{Binding UserSelected}">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="20"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+
         </StackPanel>
-        
-        <ContentControl Content="{Binding CurrentView}"  />
+
+        <ContentControl Grid.ColumnSpan="2" Grid.Row="0" Content="{Binding CurrentView}" />
+
     </Grid>
 </UserControl>

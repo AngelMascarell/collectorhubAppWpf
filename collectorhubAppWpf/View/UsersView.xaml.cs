@@ -1,4 +1,5 @@
-﻿using collectorhubAppWpf.ViewModel;
+﻿using collectorhubAppWpf.Model;
+using collectorhubAppWpf.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,27 @@ namespace collectorhubAppWpf.View
     /// </summary>
     public partial class UsersView : UserControl
     {
-        public UsersView()
+        public UsersView(InicioViewModel inicioViewModel)
         {
             InitializeComponent();
-            DataContext = new UsersViewModel();
+            DataContext = new UsersViewModel(inicioViewModel);
         }
+
+        private void OnUserSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var viewModel = DataContext as UsersViewModel;
+            if (viewModel != null)
+            {
+                if (datagridUsers.SelectedItem != null)
+                {
+                    viewModel.UserSelected = (UserModel)datagridUsers.SelectedItem;
+                }
+                else
+                {
+                    viewModel.UserSelected = null;
+                }
+            }
+        }
+
     }
 }
