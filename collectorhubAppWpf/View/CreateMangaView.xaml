@@ -7,7 +7,6 @@
              d:DesignHeight="800" d:DesignWidth="1200">
 
     <UserControl.Resources>
-        <!-- Vincula la hoja de estilo Styles.xaml -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Resources/Styles.xaml"/>
@@ -15,7 +14,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Margin="20">
+    <Grid Background="#F9F9F9">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -31,19 +30,17 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Título de la página -->
         <TextBlock Text="Crear Nuevo Manga" 
                    FontSize="28" 
                    FontWeight="Bold" 
-                   Foreground="#4CAF50" 
+                   Foreground="#333" 
                    Grid.Row="0" 
                    Grid.Column="0" 
                    Grid.ColumnSpan="2" 
                    HorizontalAlignment="Center" 
-                   Margin="0,0,0,20"/>
+                   Margin="0,20,0,40"/>
 
-        <!-- Campo Title -->
-        <TextBlock Text="Título:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10" FontWeight="Bold"/>
+        <TextBlock Text="Título:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
         <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" 
                  Grid.Row="1" 
                  Grid.Column="1" 
@@ -53,8 +50,7 @@
                  BorderBrush="#CCCCCC" 
                  FontSize="16"/>
 
-        <!-- Campo Author -->
-        <TextBlock Text="Autor:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10" FontWeight="Bold"/>
+        <TextBlock Text="Autor:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
         <TextBox Text="{Binding Author, UpdateSourceTrigger=PropertyChanged}" 
                  Grid.Row="2" 
                  Grid.Column="1" 
@@ -64,8 +60,7 @@
                  BorderBrush="#CCCCCC" 
                  FontSize="16"/>
 
-        <!-- Campo GenreId -->
-        <TextBlock Text="Género ID:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="10" FontWeight="Bold"/>
+        <TextBlock Text="Género ID:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
         <TextBox Text="{Binding GenreId, UpdateSourceTrigger=PropertyChanged}" 
                  Grid.Row="3" 
                  Grid.Column="1" 
@@ -75,8 +70,7 @@
                  BorderBrush="#CCCCCC" 
                  FontSize="16"/>
 
-        <!-- Campo Chapters -->
-        <TextBlock Text="Capítulos:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="10" FontWeight="Bold"/>
+        <TextBlock Text="Capítulos:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
         <TextBox Text="{Binding Chapters, UpdateSourceTrigger=PropertyChanged}" 
                  Grid.Row="4" 
                  Grid.Column="1" 
@@ -86,8 +80,7 @@
                  BorderBrush="#CCCCCC" 
                  FontSize="16"/>
 
-        <!-- Campo Completed -->
-        <TextBlock Text="Completado:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="10" FontWeight="Bold"/>
+        <TextBlock Text="Completado:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
         <CheckBox IsChecked="{Binding Completed, UpdateSourceTrigger=PropertyChanged}" 
                   Grid.Row="5" 
                   Grid.Column="1" 

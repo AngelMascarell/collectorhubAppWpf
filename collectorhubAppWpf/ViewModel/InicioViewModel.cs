@@ -65,7 +65,7 @@ namespace collectorhubAppWpf.ViewModel
             //ShowCreateMangaListViewCommand = new RelayCommand(param => ShowCreateMangaListView());
             //ShowReviewsViewCommand = new RelayCommand(param => ShowReviewsView());
             ShowManageUsersViewCommand = new RelayCommand(param => ShowManageUsersView());
-            //ShowStatisticsViewCommand = new RelayCommand(param => ShowStatisticsView());
+            ShowStatisticsViewCommand = new RelayCommand(param => ShowStatisticsView());
             ShowWelcomeViewCommand = new RelayCommand(param => ShowWelcomeView());
             NavigateToCreateUserCommand = new RelayCommand(param => OpenCreateUserView());
             NavigateToEditUserCommand = new RelayCommand(param => OpenUpdateUserView());
@@ -121,7 +121,7 @@ namespace collectorhubAppWpf.ViewModel
 
         private void ShowStatisticsView()
         {
-            //CurrentView = new StatisticsView();
+            CurrentView = new StatsView();
         }
 
     }

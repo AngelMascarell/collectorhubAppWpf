@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="collectorhubAppWpf.View.StatsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="800" d:DesignWidth="1200">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Background="#F9F9F9">
+        
+        <TextBlock Text="Estadísticas de la Aplicación" 
+                   FontSize="32" FontWeight="Bold" 
+                   HorizontalAlignment="Center" VerticalAlignment="Top" 
+                   Margin="0,50,0,0" Foreground="#333"/>
+
+        <Grid VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0" Grid.Column="0" CornerRadius="15" Background="White" Padding="20" Margin="20" BorderBrush="#E0E0E0" BorderThickness="1">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Total de Mangas Registrados" FontWeight="SemiBold" FontSize="18" Foreground="#555" />
+                    <TextBlock Text="{Binding TotalMangas}" FontSize="48" FontWeight="Bold" Foreground="#FF68EB9C" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="0" Grid.Column="1" CornerRadius="15" Background="White" Padding="20" Margin="20" BorderBrush="#E0E0E0" BorderThickness="1">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Total de Géneros" FontWeight="SemiBold" FontSize="18" Foreground="#555" />
+                    <TextBlock Text="{Binding TotalGenres}" FontSize="48" FontWeight="Bold" Foreground="#FF68EB9C" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="0" Grid.Column="2" CornerRadius="15" Background="White" Padding="20" Margin="20" BorderBrush="#E0E0E0" BorderThickness="1">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Total de Usuarios" FontWeight="SemiBold" FontSize="18" Foreground="#555" />
+                    <TextBlock Text="{Binding TotalUsers}" FontSize="48" FontWeight="Bold" Foreground="#FF68EB9C" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="0" CornerRadius="15" Background="White" Padding="20" Margin="20" BorderBrush="#E0E0E0" BorderThickness="1">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Valoraciones Totales" FontWeight="SemiBold" FontSize="18" Foreground="#555" />
+                    <TextBlock Text="{Binding TotalRatings}" FontSize="48" FontWeight="Bold" Foreground="#FF68EB9C" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="1" CornerRadius="15" Background="White" Padding="20" Margin="20" BorderBrush="#E0E0E0" BorderThickness="1">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Promedio de Valoraciones" FontWeight="SemiBold" FontSize="18" Foreground="#555" />
+                    <TextBlock Text="{Binding AvgRating}" FontSize="48" FontWeight="Bold" Foreground="#FF68EB9C" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="2" CornerRadius="15" Background="White" Padding="20" Margin="20" BorderBrush="#E0E0E0" BorderThickness="1">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock Text="Total de subscripciones" FontWeight="SemiBold" FontSize="18" Foreground="#555" />
+                    <TextBlock Text="{Binding TotalUsersSubscribed}" FontSize="48" FontWeight="Bold" Foreground="#FF68EB9C" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <ContentControl Grid.ColumnSpan="2" Grid.Row="0" Content="{Binding CurrentView}" />
+    </Grid>
+</UserControl>

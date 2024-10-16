@@ -20,6 +20,12 @@ namespace collectorhubAppWpf.ViewModel
         private string _password;
         private DateTime? _birthdate;
 
+        private bool _isPremium;
+
+        private DateTime? _premiumStartDate;
+
+        private DateTime? _premiumEndDate;
+
         public string Username
         {
             get => _username;
@@ -103,7 +109,10 @@ namespace collectorhubAppWpf.ViewModel
                 birthdate = Birthdate?.ToString("yyyy-MM-dd"),
                 registerDate = DateTime.Now.ToString("yyyy-MM-dd"),
                 mangas = new List<object>(),
-                password = Password
+                password = Password,
+                isPremium = false,
+                premiumStartDate = "",
+                premiumEndDate = ""
             };
 
             var json = JsonConvert.SerializeObject(newUser);

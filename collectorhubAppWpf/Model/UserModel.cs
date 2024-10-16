@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace collectorhubAppWpf.Model
 {
@@ -14,6 +15,33 @@ namespace collectorhubAppWpf.Model
         private DateTime _birthdate;
         private DateTime _registerDate;
         private List<MangaModel> _mangas;
+
+        private bool _isPremium;
+
+        private DateTime _premiumStartDate;
+
+        private DateTime _premiumEndDate;
+
+        [JsonProperty("isPremium")]
+        public bool IsPremium
+        {
+            get { return _isPremium; }
+            set { _isPremium = value; OnPropertyChanged(nameof(IsPremium)); }
+        }
+
+        [JsonProperty("premiumStartDate")]
+        public DateTime PremiumStartDate
+        {
+            get { return _premiumStartDate; }
+            set { _premiumStartDate = value; OnPropertyChanged(nameof(PremiumStartDate)); }
+        }
+
+        [JsonProperty("premiumEndDate")]
+        public DateTime PremiumEndDate
+        {
+            get { return _premiumEndDate; }
+            set { _premiumEndDate = value; OnPropertyChanged(nameof(PremiumEndDate)); }
+        }
 
         [JsonProperty("id")]
         public long Id

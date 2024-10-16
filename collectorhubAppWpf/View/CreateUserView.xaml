@@ -22,7 +22,7 @@
         <TextBlock Text="Crear Nuevo Usuario" 
                    FontSize="30" FontWeight="Bold" 
                    HorizontalAlignment="Center" VerticalAlignment="Top" 
-                   Margin="0,30,0,40" Foreground="#FF68EB9C"/>
+                   Margin="0,30,0,40" Foreground="#333"/>
 
         <StackPanel HorizontalAlignment="Center" Width="400">
 

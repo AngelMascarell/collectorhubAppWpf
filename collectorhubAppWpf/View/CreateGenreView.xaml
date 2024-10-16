@@ -14,7 +14,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Background="#F9F9F9" Margin="30">
+    <Grid Background="#F9F9F9">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -25,27 +25,23 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Encabezado -->
         <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                    Text="Crear Nuevo Género" 
                    FontSize="28" FontWeight="Bold" 
                    Foreground="#333" HorizontalAlignment="Center" 
                    Margin="0,20,0,40"/>
 
-        <!-- Etiqueta Nombre -->
         <TextBlock Text="Nombre del Género:" 
                    FontSize="16" Foreground="#555" FontWeight="Bold"
                    VerticalAlignment="Center" HorizontalAlignment="Right"
                    Grid.Row="1" Grid.Column="0" Margin="100,10,10,10" />
 
-        <!-- Campo de Entrada -->
         <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
                  Grid.Row="1" Grid.Column="1" Margin="10,10,260,10"
                  FontSize="14" Padding="10" 
                  BorderBrush="#AAA" BorderThickness="1" 
                  Background="White" Width="300" />
 
-        <!-- Botón Guardar -->
         <Button Content="Guardar" Command="{Binding SaveCommand}" 
                 Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                 HorizontalAlignment="Center" VerticalAlignment="Top" 

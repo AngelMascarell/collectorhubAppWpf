@@ -90,7 +90,7 @@ namespace collectorhubAppWpf.ViewModel
             LoadUsersAsync();
             SearchCommand = new RelayCommand(param => ExecuteSearchCommand());
             NavigateToCreateUserCommand = new RelayCommand(param => NavigateToAddUser());
-           // NavigateToEditUserCommand = new RelayCommand(param => NavigateToUpdateUser());
+           //NavigateToEditUserCommand = new RelayCommand(param => NavigateToUpdateUser());
 
             InicioViewModel = inicioViewModel;
             UserSelected = null;
@@ -100,7 +100,7 @@ namespace collectorhubAppWpf.ViewModel
         {
             if (UserSelected != null)
             {
-                MessageBox.Show($"Usuario seleccionado: {UserSelected.Username}"); // Mensaje de depuración
+                MessageBox.Show($"Usuario seleccionado: {UserSelected.Username}");
                 _inicioViewModel.UserSelected = UserSelected;
                 CurrentView = new UpdateUserView(UserSelected);
             }
