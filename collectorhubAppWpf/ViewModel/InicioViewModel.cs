@@ -63,7 +63,7 @@ namespace collectorhubAppWpf.ViewModel
             ShowCreateGenreViewCommand = new RelayCommand(param => ShowCreateGenreView());
             ShowAddMangaViewCommand = new RelayCommand(param => ShowAddMangaView());
             //ShowCreateMangaListViewCommand = new RelayCommand(param => ShowCreateMangaListView());
-            //ShowReviewsViewCommand = new RelayCommand(param => ShowReviewsView());
+            ShowReviewsViewCommand = new RelayCommand(param => ShowReviewsView());
             ShowManageUsersViewCommand = new RelayCommand(param => ShowManageUsersView());
             ShowStatisticsViewCommand = new RelayCommand(param => ShowStatisticsView());
             ShowWelcomeViewCommand = new RelayCommand(param => ShowWelcomeView());
@@ -110,7 +110,7 @@ namespace collectorhubAppWpf.ViewModel
 
         private void ShowReviewsView()
         {
-            //CurrentView = new ReviewsView();
+            CurrentView = new ReviewsView();
         }
 
         private void ShowManageUsersView()
