@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using collectorhubAppWpf.Model;
 using System.Windows.Controls;
 using collectorhubAppWpf.View;
+using collectorhubAppWpf.Stores;
 
 namespace collectorhubAppWpf.ViewModel
 {
@@ -85,11 +86,13 @@ namespace collectorhubAppWpf.ViewModel
             }
         }
 
+        private NavigationStore navigationStore;
+
         public CreateUserViewModel(InicioViewModel inicioViewModel)
         {
             _httpClient = new HttpClient();
             SaveCommand = new RelayCommand(async param => await SaveUser());
-            ShowManageUsersViewCommand = new RelayCommand(param => Cancel(new InicioViewModel()));
+            ShowManageUsersViewCommand = new RelayCommand(param => Cancel(new InicioViewModel(navigationStore)));
 
             InicioViewModel = inicioViewModel;
         }

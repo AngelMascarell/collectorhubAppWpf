@@ -12,6 +12,7 @@ using MVVM.Commands;
 using collectorhubAppWpf.ViewModel;
 using collectorhubAppWpf.View;
 using System.Windows.Controls;
+using collectorhubAppWpf.Stores;
 
 namespace collectorhubAppWpf.ViewModel
 {
@@ -55,7 +56,7 @@ namespace collectorhubAppWpf.ViewModel
             }
         }
 
-        public InicioViewModel()
+        public InicioViewModel(NavigationStore navigationStore)
         {
             CurrentView = new WelcomeView();
 

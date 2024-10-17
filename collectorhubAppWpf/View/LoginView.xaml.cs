@@ -1,4 +1,6 @@
-﻿using System;
+﻿using collectorhubAppWpf.Stores;
+using collectorhubAppWpf.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,21 @@ namespace collectorhubAppWpf.View
     /// </summary>
     public partial class LoginView : UserControl
     {
+        private NavigationStore navigationStore;
+
         public LoginView()
         {
             InitializeComponent();
+            DataContext = new LoginViewModel(navigationStore);
         }
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is LoginViewModel viewModel)
+            {
+                viewModel.Password = ((PasswordBox)sender).Password;
+            }
+        }
+
     }
 }

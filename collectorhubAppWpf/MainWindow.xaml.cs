@@ -1,24 +1,56 @@
-﻿using System.Text;
+﻿using collectorhubAppWpf.Stores;
+using collectorhubAppWpf.ViewModel;
+using System.Net.Http;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace collectorhubAppWpf
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly NavigationStore _navigationStore;
+
         public MainWindow()
         {
             InitializeComponent();
+            _navigationStore = new NavigationStore();
+
+            // Establecer el DataContext con el NavigationStore
+            DataContext = new MainWindowViewModel(_navigationStore);
+
+            // Intentar iniciar sesión con el token si está disponible
+            loginWithTokenAsync();
+        }
+
+        private async Task loginWithTokenAsync()
+        {
+            if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.AccessToken))
+            {
+                string apiUrl = "http://localhost:8080/auth/login";
+
+                try
+                {
+                    using (HttpClient client = new HttpClient())
+                    {
+                        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+                        await client.GetStringAsync(apiUrl);
+
+                        // Cambiar a InicioViewModel si el token es válido
+                        _navigationStore.CurrentViewModel = new InicioViewModel(_navigationStore);
+                        return;
+                    }
+                }
+                catch (HttpRequestException ex)
+                {
+                    MessageBox.Show($"Error al realizar la solicitud HTTP: {ex.Message}");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error: {ex.Message}");
+                }
+            }
+
+            // Si no hay token, establecer el LoginViewModel como CurrentViewModel
+            _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore);
         }
     }
 }

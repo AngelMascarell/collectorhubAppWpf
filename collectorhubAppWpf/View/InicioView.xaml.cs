@@ -1,4 +1,5 @@
-﻿using collectorhubAppWpf.ViewModel;
+﻿using collectorhubAppWpf.Stores;
+using collectorhubAppWpf.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,12 @@ namespace collectorhubAppWpf.View
     /// </summary>
     public partial class InicioView : Window
     {
+
+        private NavigationStore navigationStore;
         public InicioView()
         {
             InitializeComponent();
-            DataContext = new InicioViewModel();
+            DataContext = new InicioViewModel(navigationStore);
         }
 
     }

@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using collectorhubAppWpf.Stores;
+using collectorhubAppWpf.ViewModel;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -9,6 +11,7 @@ namespace collectorhubAppWpf
     /// </summary>
     public partial class App : Application
     {
+
     }
 
 }
