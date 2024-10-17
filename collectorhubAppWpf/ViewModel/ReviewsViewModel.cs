@@ -36,8 +36,8 @@ namespace collectorhubAppWpf.ViewModel
             try
             {
                 string apiUrl = "http://localhost:8080/appReview/getAll";
-                //_httpClient.DefaultRequestHeaders.Add("Bearer", "Bearer " + Properties.Settings.Default.AccessToken);
-                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbmdlbCIsImlhdCI6MTcyOTE4NTA3MSwiZXhwIjoxNzI5MTg2NTExfQ.TXfpd3KfM275NE1fGKQF8kDELWKZinCX8Pp2yr3HQpo");
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+                //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbmdlbCIsImlhdCI6MTcyOTE4NTA3MSwiZXhwIjoxNzI5MTg2NTExfQ.TXfpd3KfM275NE1fGKQF8kDELWKZinCX8Pp2yr3HQpo");
 
                 HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
@@ -74,8 +74,8 @@ namespace collectorhubAppWpf.ViewModel
             try
             {
                 string apiUrl = $"http://localhost:8080/user/{review.UserId}/username";
-                //_httpClient.DefaultRequestHeaders.Add("Bearer", "Bearer " + Properties.Settings.Default.AccessToken);
-                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbmdlbCIsImlhdCI6MTcyOTE4NTA3MSwiZXhwIjoxNzI5MTg2NTExfQ.TXfpd3KfM275NE1fGKQF8kDELWKZinCX8Pp2yr3HQpo");
+                //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+                //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBbmdlbCIsImlhdCI6MTcyOTE4NTA3MSwiZXhwIjoxNzI5MTg2NTExfQ.TXfpd3KfM275NE1fGKQF8kDELWKZinCX8Pp2yr3HQpo");
 
                 HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 

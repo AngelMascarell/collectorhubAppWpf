@@ -72,6 +72,8 @@ namespace collectorhubAppWpf.ViewModel
                 var jsonContent = JsonConvert.SerializeObject(genreRequest);
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
                 var response = await _httpClient.PostAsync("genre", content);
 
                 if (response.IsSuccessStatusCode)
@@ -92,7 +94,9 @@ namespace collectorhubAppWpf.ViewModel
 
         public async Task<GenreModel> GetGenreByIdAsync(Guid id)
         {
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
             var response = await _httpClient.GetAsync($"genre/{id}");
+
             response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
@@ -101,7 +105,9 @@ namespace collectorhubAppWpf.ViewModel
 
         public async Task<List<GenreModel>> GetAllGenresAsync()
         {
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
             var response = await _httpClient.GetAsync("genre");
+
             response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
@@ -119,12 +125,17 @@ namespace collectorhubAppWpf.ViewModel
             var jsonContent = JsonConvert.SerializeObject(genreRequest);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
             var response = await _httpClient.PutAsync($"genre/{id}", content);
+
             response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteGenreAsync(Guid id)
         {
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
             var response = await _httpClient.DeleteAsync($"genre/{id}");
             response.EnsureSuccessStatusCode();
         }

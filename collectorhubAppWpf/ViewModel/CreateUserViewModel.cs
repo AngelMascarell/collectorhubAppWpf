@@ -124,6 +124,7 @@ namespace collectorhubAppWpf.ViewModel
             try
             {
                 var response = await _httpClient.PostAsync("http://localhost:8080/user/new", content);
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
 
                 if (response.IsSuccessStatusCode)
                 {

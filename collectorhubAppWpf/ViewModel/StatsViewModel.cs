@@ -65,6 +65,8 @@ namespace collectorhubAppWpf.ViewModel
         {
             try
             {
+                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
                 TotalMangas = await GetCountFromApiAsync("http://localhost:8080/manga/countAll");
 
                 TotalGenres = await GetCountFromApiAsync("http://localhost:8080/api/genre/countAll");

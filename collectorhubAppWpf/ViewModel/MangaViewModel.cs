@@ -139,6 +139,12 @@ namespace collectorhubAppWpf.ViewModel
                 return false;
             }
 
+            if (_httpClient.DefaultRequestHeaders.Authorization == null)
+            {
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AccessToken);
+            }
+
             var response = await _httpClient.GetAsync($"manga/existsByTitle/{title}");
             response.EnsureSuccessStatusCode();
 
@@ -172,6 +178,8 @@ namespace collectorhubAppWpf.ViewModel
                 var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
                 // Intentar crear el manga en el servidor
+                //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
                 var response = await _httpClient.PostAsync("manga", content);
 
                 if (response.IsSuccessStatusCode)
@@ -200,6 +208,8 @@ namespace collectorhubAppWpf.ViewModel
 
         public async Task<MangaModel> GetMangaByIdAsync(Guid id)
         {
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
             var response = await _httpClient.GetAsync($"manga/{id}");
             response.EnsureSuccessStatusCode();
 
@@ -209,6 +219,8 @@ namespace collectorhubAppWpf.ViewModel
 
         public async Task<List<MangaModel>> GetAllMangasAsync()
         {
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
             var response = await _httpClient.GetAsync("manga");
             response.EnsureSuccessStatusCode();
 
@@ -231,12 +243,16 @@ namespace collectorhubAppWpf.ViewModel
             var jsonContent = JsonConvert.SerializeObject(mangaRequest);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
             var response = await _httpClient.PutAsync($"manga/{id}", content);
             response.EnsureSuccessStatusCode();
         }
 
         public async Task DeleteMangaAsync(Guid id)
         {
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
             var response = await _httpClient.DeleteAsync($"manga/{id}");
             response.EnsureSuccessStatusCode();
         }

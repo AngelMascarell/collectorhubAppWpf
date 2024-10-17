@@ -82,8 +82,8 @@ namespace collectorhubAppWpf.ViewModel
                         // Deserialize JSON to dynamic object
                         dynamic responseObject = JsonConvert.DeserializeObject(jsonContent);
 
-                        string accessToken = responseObject.accessToken;
-                        string refreshToken = responseObject.refreshToken;
+                        string accessToken = responseObject.token;
+                        //string refreshToken = responseObject.refreshToken;
 
                         // Guardar los tokens en Properties (o donde lo necesites)
                         Properties.Settings.Default.AccessToken = accessToken;
@@ -93,6 +93,7 @@ namespace collectorhubAppWpf.ViewModel
 
                         // Navegar a la siguiente vista (Inicio)
                         _navigationStore.CurrentViewModel = new InicioViewModel(_navigationStore);
+
                     }
                     else
                     {

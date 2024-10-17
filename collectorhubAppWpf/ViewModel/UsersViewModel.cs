@@ -288,6 +288,9 @@ namespace collectorhubAppWpf.ViewModel
                 using (HttpClient client = new HttpClient())
                 {
                     string apiUrl = "http://localhost:8080/user/all";
+
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
                     string jsonResponse = await client.GetStringAsync(apiUrl);
 
                     var jsonObject = JObject.Parse(jsonResponse);
@@ -331,6 +334,7 @@ namespace collectorhubAppWpf.ViewModel
         private async Task ExecuteSearchCommand()
         {
             string apiUrl = "https://render-intermodular.onrender.com/user/getUsersFilter";
+
             StringBuilder apiUrlBuilder = new StringBuilder(apiUrl);
             apiUrlBuilder.Append("?");
 
@@ -363,6 +367,8 @@ namespace collectorhubAppWpf.ViewModel
                 {
                     // Añadir el token de autenticación
                     //client.DefaultRequestHeaders.Add("auth-token", Properties.Default.AccessToken);
+
+                    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
 
                     // Realizar la solicitud HTTP
                     string jsonResponse = await client.GetStringAsync(apiUrlWithFilter);

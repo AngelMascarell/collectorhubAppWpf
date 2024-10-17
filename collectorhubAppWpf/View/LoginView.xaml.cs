@@ -22,12 +22,10 @@ namespace collectorhubAppWpf.View
     /// </summary>
     public partial class LoginView : UserControl
     {
-        private NavigationStore navigationStore;
 
         public LoginView()
         {
             InitializeComponent();
-            DataContext = new LoginViewModel(navigationStore);
         }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)

@@ -11,14 +11,18 @@ namespace collectorhubAppWpf
 
         public MainWindow()
         {
-            InitializeComponent();
             _navigationStore = new NavigationStore();
+
+            InitializeComponent();
+            loginWithTokenAsync();
 
             // Establecer el DataContext con el NavigationStore
             DataContext = new MainWindowViewModel(_navigationStore);
 
             // Intentar iniciar sesión con el token si está disponible
-            loginWithTokenAsync();
+            
+            
+
         }
 
         private async Task loginWithTokenAsync()
