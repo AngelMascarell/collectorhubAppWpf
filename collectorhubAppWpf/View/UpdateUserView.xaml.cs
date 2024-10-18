@@ -23,8 +23,6 @@ namespace collectorhubAppWpf.View
     public partial class UpdateUserView : UserControl
     {
 
-        private UserModel _selectedUser;
-
         public UpdateUserView(UserModel selectedUser)
         {
             InitializeComponent();

@@ -12,15 +12,13 @@ namespace collectorhubAppWpf.Model
         private string _username;
         private string _email;
         private string _password;
-        private DateTime _birthdate;
-        private DateTime _registerDate;
+        private DateTime? _birthdate;
+        private DateTime? _registerDate;
         private List<MangaModel> _mangas;
 
         private bool _isPremium;
-
-        private DateTime _premiumStartDate;
-
-        private DateTime _premiumEndDate;
+        private DateTime? _premiumStartDate; // Cambiar a DateTime?
+        private DateTime? _premiumEndDate;   // Cambiar a DateTime?
 
         [JsonProperty("isPremium")]
         public bool IsPremium
@@ -30,18 +28,19 @@ namespace collectorhubAppWpf.Model
         }
 
         [JsonProperty("premiumStartDate")]
-        public DateTime PremiumStartDate
+        public DateTime? PremiumStartDate // Cambiar a DateTime?
         {
             get { return _premiumStartDate; }
             set { _premiumStartDate = value; OnPropertyChanged(nameof(PremiumStartDate)); }
         }
 
         [JsonProperty("premiumEndDate")]
-        public DateTime PremiumEndDate
+        public DateTime? PremiumEndDate // Cambiar a DateTime?
         {
             get { return _premiumEndDate; }
             set { _premiumEndDate = value; OnPropertyChanged(nameof(PremiumEndDate)); }
         }
+
 
         [JsonProperty("id")]
         public long Id
@@ -65,14 +64,14 @@ namespace collectorhubAppWpf.Model
         }
 
         [JsonProperty("birthdate")]
-        public DateTime Birthdate
+        public DateTime? Birthdate
         {
             get { return _birthdate; }
             set { _birthdate = value; OnPropertyChanged(nameof(Birthdate)); }
         }
 
         [JsonProperty("registerDate")]
-        public DateTime RegisterDate
+        public DateTime? RegisterDate
         {
             get { return _registerDate; }
             set { _registerDate = value; OnPropertyChanged(nameof(RegisterDate)); }

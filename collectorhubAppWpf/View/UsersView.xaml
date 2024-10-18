@@ -29,7 +29,13 @@
                     <TextBlock FontSize="14" Text="Fecha de nacimiento" Padding="0,26,0,7"/>
                     <TextBox Height="30" Text="{Binding Birthdate}" FontSize="16"/>
                     <TextBlock FontSize="14" Text="Fecha de registro" Padding="0,26,0,7"/>
-                    <TextBox Height="30" Text="{Binding RegisterDate}" FontSize="16" IsReadOnly="True"/>
+                    <TextBox Height="30" Text="{Binding RegisterDate}" FontSize="16"/>
+                    <TextBlock FontSize="14" Text="Rol" Padding="0,26,0,7"/>
+                    <ComboBox Height="30"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectedValue="{Binding SelectedRole}" SelectedValuePath="Content" FontSize="16">
+                        <ComboBoxItem Content="client"/>
+                        <ComboBoxItem Content="admin"/>
+                        <ComboBoxItem Content="employee"/>
+                    </ComboBox>
 
                     <Button FontFamily="Montserrat" FontSize="16" Background="#e838b1" Content="Buscar" BorderBrush="{x:Null}" Width="138" Height="36" Margin="0,30,0,0" Command="{Binding SearchCommand}">
                         <Button.Resources>
@@ -100,7 +106,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                <Button FontFamily="Montserrat" FontSize="16" Background="#ffe65d" Content="Editar Usuario" BorderBrush="{x:Null}" Width="138" Height="36" Margin="0,0,10,0" Command="{Binding DataContext.NavigateToEditUserCommand, RelativeSource={RelativeSource AncestorType=Window}}"  IsEnabled="{Binding UserSelected}">
+                <Button FontFamily="Montserrat" FontSize="16" Background="#ffe65d" Content="Editar Usuario" BorderBrush="{x:Null}" Width="138" Height="36" Margin="0,0,10,0" Command="{Binding NavigateToEditUserCommand}"  IsEnabled="{Binding UserSelected}">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="20"/>

@@ -30,13 +30,15 @@ namespace collectorhubAppWpf.ViewModel
         private int _itemsPerPage = 15;
 
         private long _guid;
-        private String _userName;
+        private String _username;
         private string _password;
         private string _email;
         private DateTime _registerDate;
         private DateTime _birthdate;
 
         private List<MangaModel> _mangas;
+
+        private string _selectedRole;
 
         public InicioViewModel InicioViewModel { get; set; }
 
@@ -60,6 +62,19 @@ namespace collectorhubAppWpf.ViewModel
             {
                 _isUserListPanelVisible = value;
                 OnPropertyChanged(nameof(IsUserListPanelVisible));
+            }
+        }
+
+        public string SelectedRole
+        {
+            get { return _selectedRole; }
+            set
+            {
+                if (_selectedRole != value)
+                {
+                    _selectedRole = value;
+                    OnPropertyChanged(nameof(SelectedRole));
+                }
             }
         }
 
@@ -90,18 +105,18 @@ namespace collectorhubAppWpf.ViewModel
             LoadUsersAsync();
             SearchCommand = new RelayCommand(param => ExecuteSearchCommand());
             NavigateToCreateUserCommand = new RelayCommand(param => NavigateToAddUser());
-           //NavigateToEditUserCommand = new RelayCommand(param => NavigateToUpdateUser());
+            NavigateToEditUserCommand = new RelayCommand(param => NavigateToUpdateUser(inicioViewModel));
 
             InicioViewModel = inicioViewModel;
             UserSelected = null;
         }
 
-        private void NavigateToUpdateUser()
+        private void NavigateToUpdateUser(InicioViewModel inicioViewModel)
         {
             if (UserSelected != null)
             {
                 MessageBox.Show($"Usuario seleccionado: {UserSelected.Username}");
-                _inicioViewModel.UserSelected = UserSelected;
+                inicioViewModel.UserSelected = UserSelected;
                 CurrentView = new UpdateUserView(UserSelected);
             }
             else
@@ -137,10 +152,13 @@ namespace collectorhubAppWpf.ViewModel
                 {
                     _userSelected = value;
                     InicioViewModel.UserSelected = value;
-                    OnPropertyChanged(nameof(UserSelected));
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(CanSelectUser));
                 }
             }
         }
+
+        public bool CanSelectUser => UserSelected != null;
 
         public List<MangaModel> Mangas
         {
@@ -168,15 +186,15 @@ namespace collectorhubAppWpf.ViewModel
             }
         }
 
-        public string UserName
+        public string Username
         {
-            get => _userName;
+            get => _username;
             set
             {
-                if (_userName != value)
+                if (_username != value)
                 {
-                    _userName = value;
-                    OnPropertyChanged(nameof(UserName));
+                    _username = value;
+                    OnPropertyChanged(nameof(Username));
                 }
             }
         }
@@ -333,62 +351,55 @@ namespace collectorhubAppWpf.ViewModel
 
         private async Task ExecuteSearchCommand()
         {
-            string apiUrl = "https://render-intermodular.onrender.com/user/getUsersFilter";
+            string apiUrl = "http://localhost:8080/user/getUsersFilter";
 
-            StringBuilder apiUrlBuilder = new StringBuilder(apiUrl);
-            apiUrlBuilder.Append("?");
-
-            if (!string.IsNullOrEmpty(UserName))
+            // Crear el objeto de solicitud
+            var filterRequest = new
             {
-                apiUrlBuilder.Append($"name={UserName}&");
-            }
-
-            if (!string.IsNullOrEmpty(Email))
-            {
-                apiUrlBuilder.Append($"email={Email}&");
-            }
-
-            if (RegisterDate != default)
-            {
-                apiUrlBuilder.Append($"registerDate={RegisterDate:yyyy-MM-dd}&");
-            }
-
-            if (Birthdate != default)
-            {
-                apiUrlBuilder.Append($"birthdate={Birthdate:yyyy-MM-dd}&");
-            }
-
-            // Eliminar el último '&' si existe
-            string apiUrlWithFilter = apiUrlBuilder.ToString().TrimEnd('&');
+                username = Username,
+                email = Email,
+                registerDate = RegisterDate != default(DateTime) ? (DateTime?)RegisterDate : null,
+                birthdate = Birthdate != default(DateTime) ? (DateTime?)Birthdate : null,
+                role = SelectedRole
+            };
 
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
                     // Añadir el token de autenticación
-                    //client.DefaultRequestHeaders.Add("auth-token", Properties.Default.AccessToken);
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
 
-                    _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+                    // Serializar el objeto de solicitud a JSON
+                    var jsonContent = JsonConvert.SerializeObject(filterRequest);
+                    var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                    // Realizar la solicitud HTTP
-                    string jsonResponse = await client.GetStringAsync(apiUrlWithFilter);
+                    // Realizar la solicitud HTTP POST
+                    var response = await client.PostAsync(apiUrl, content); // Cambiado a PostAsync
 
-                    // Deserializar la respuesta
-                    Users = JsonConvert.DeserializeObject<ObservableCollection<UserModel>>(jsonResponse);
+                    // Verificar la respuesta
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonResponse = await response.Content.ReadAsStringAsync();
+                        // Deserializar la respuesta
+                        Users = JsonConvert.DeserializeObject<ObservableCollection<UserModel>>(jsonResponse);
 
-                    // Reiniciar la paginación
-                    _currentPageIndex = 0;
+                        // Reiniciar la paginación
+                        _currentPageIndex = 0;
 
-                    // Notificar cambios
-                    OnPropertyChanged(nameof(Users));
-                    OnPropertyChanged(nameof(CurrentPageUsers));
-                    OnPropertyChanged(nameof(CurrentPage));
+                        // Notificar cambios
+                        OnPropertyChanged(nameof(Users));
+                        OnPropertyChanged(nameof(CurrentPageUsers));
+                        OnPropertyChanged(nameof(CurrentPage));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al obtener los usuarios. Código de respuesta: " + response.StatusCode);
+                    }
                 }
                 catch (HttpRequestException ex)
                 {
-                    MessageBox.Show("No existe ningún usuario con las características proporcionadas.");
-                    // Optional: Puedes mostrar detalles adicionales si lo deseas
-                    // MessageBox.Show($"Error al realizar la solicitud HTTP: {ex.Message}");
+                    MessageBox.Show("Error al realizar la solicitud HTTP: " + ex.Message);
                 }
                 catch (Exception ex)
                 {
@@ -396,6 +407,8 @@ namespace collectorhubAppWpf.ViewModel
                 }
             }
         }
+
+
 
     }
 }
