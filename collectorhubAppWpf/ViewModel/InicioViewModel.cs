@@ -1,15 +1,8 @@
 ﻿using collectorhubAppWpf.Model;
-using Newtonsoft.Json;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows;
-using System.Text;
-using System.IO;
 using MVVM.Commands;
-using collectorhubAppWpf.ViewModel;
 using collectorhubAppWpf.View;
 using System.Windows.Controls;
 using collectorhubAppWpf.Stores;
@@ -63,7 +56,7 @@ namespace collectorhubAppWpf.ViewModel
             // Inicializamos los comandos
             ShowCreateGenreViewCommand = new RelayCommand(param => ShowCreateGenreView());
             ShowAddMangaViewCommand = new RelayCommand(param => ShowAddMangaView());
-            //ShowCreateMangaListViewCommand = new RelayCommand(param => ShowCreateMangaListView());
+            ShowCreateMangaListViewCommand = new RelayCommand(param => ShowCreateMangaListView());
             ShowReviewsViewCommand = new RelayCommand(param => ShowReviewsView());
             ShowManageUsersViewCommand = new RelayCommand(param => ShowManageUsersView());
             ShowStatisticsViewCommand = new RelayCommand(param => ShowStatisticsView());
@@ -106,7 +99,7 @@ namespace collectorhubAppWpf.ViewModel
 
         private void ShowCreateMangaListView()
         {
-            //CurrentView = new CreateMangaListView();
+            CurrentView = new CreateMangaListView();
         }
 
         private void ShowReviewsView()

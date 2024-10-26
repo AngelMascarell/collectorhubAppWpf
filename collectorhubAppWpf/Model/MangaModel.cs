@@ -56,11 +56,15 @@ namespace collectorhubAppWpf.Model
             set { _completed = value; OnPropertyChanged(nameof(Completed)); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string propertyName)
+        private bool _isSelected;
+        public bool IsSelected
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => _isSelected;
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
         }
     }
 }
