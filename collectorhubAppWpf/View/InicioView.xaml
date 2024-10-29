@@ -31,6 +31,7 @@
             <Button Content="Estadísticas" Height="50" Margin="0,10,10,0" Command="{Binding ShowStatisticsViewCommand}"/>
             <Button Content="Crear Tareas" Height="50" Margin="0,10,10,0" Command="{Binding ShowTaskViewCommand}"/>
             <Button Content="Crear Gamificaciones" Height="50" Margin="0,10,10,0" Command="{Binding ShowGamificationViewCommand}"/>
+            <Button Content="Todas las Gamificaciones" Height="50" Margin="0,10,10,0" Command="{Binding ShowAllGamificationViewCommand}"/>
 
         </StackPanel>
 

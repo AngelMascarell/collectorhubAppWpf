@@ -2,19 +2,22 @@
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel;
+using System.Windows.Media.Imaging;
 
 namespace collectorhubAppWpf.Model
 {
     public class GamificationModel : BaseModel
     {
-        private Guid _id;
+        private long _id;
         private string _title;
         private string _description;
         private string _imageUrl;
         private List<GamificationConditionModel> _conditions;
 
+        public BitmapImage ImageSource { get; set; }
+
         [JsonProperty("id")]
-        public Guid Id
+        public long Id
         {
             get { return _id; }
             set { _id = value; OnPropertyChanged(nameof(Id)); }
