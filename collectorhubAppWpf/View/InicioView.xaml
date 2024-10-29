@@ -29,6 +29,7 @@
             <Button Content="Valoraciones de la Aplicación" Height="50" Margin="0,10,10,0" Command="{Binding ShowReviewsViewCommand}"/>
             <Button Content="Gestionar Usuarios" Height="50" Margin="0,10,10,0" Command="{Binding ShowManageUsersViewCommand}"/>
             <Button Content="Estadísticas" Height="50" Margin="0,10,10,0" Command="{Binding ShowStatisticsViewCommand}"/>
+            <Button Content="Crear Tareas" Height="50" Margin="0,10,10,0" Command="{Binding ShowTaskViewCommand}"/>
 
         </StackPanel>
 

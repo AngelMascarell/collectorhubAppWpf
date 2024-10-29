@@ -16,6 +16,8 @@ namespace collectorhubAppWpf.Model
         private DateTime? _registerDate;
         private List<MangaModel> _mangas;
 
+        private List<TaskModel> _tasks;
+
         private bool _isPremium;
         private DateTime? _premiumStartDate; // Cambiar a DateTime?
         private DateTime? _premiumEndDate;   // Cambiar a DateTime?
@@ -89,6 +91,13 @@ namespace collectorhubAppWpf.Model
         {
             get { return _mangas; }
             set { _mangas = value; OnPropertyChanged(nameof(Mangas)); }
+        }
+
+        [JsonProperty("tasks")]
+        public List<TaskModel> Tasks
+        {
+            get { return _tasks; }
+            set { _tasks = value; OnPropertyChanged(nameof(Tasks)); }
         }
     }
 }
