@@ -7,22 +7,22 @@ namespace collectorhubAppWpf.Model
 {
     public class GamificationConditionModel : BaseModel
     {
-        private Guid _id;
-        private string _conditionType; // e.g., "task_completed"
+        private long _id;
+        private string _type; // e.g., "task_completed"
         private int _threshold; // e.g., number of tasks to complete
 
         [JsonProperty("id")]
-        public Guid Id
+        public long Id
         {
             get { return _id; }
             set { _id = value; OnPropertyChanged(nameof(Id)); }
         }
 
-        [JsonProperty("conditionType")]
-        public string ConditionType
+        [JsonProperty("type")]
+        public string Type
         {
-            get { return _conditionType; }
-            set { _conditionType = value; OnPropertyChanged(nameof(ConditionType)); }
+            get { return _type; }
+            set { _type = value; OnPropertyChanged(nameof(Type)); }
         }
 
         [JsonProperty("threshold")]

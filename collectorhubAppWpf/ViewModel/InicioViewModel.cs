@@ -32,6 +32,7 @@ namespace collectorhubAppWpf.ViewModel
         public ICommand ShowStatisticsViewCommand { get; set; }
         public ICommand ShowWelcomeViewCommand { get; set; }
         public ICommand ShowTaskViewCommand { get; set; }
+        public ICommand ShowGamificationViewCommand { get; set; }
 
         public ICommand NavigateToCreateUserCommand { get; set; }
         public ICommand NavigateToEditUserCommand { get; set; }
@@ -65,6 +66,12 @@ namespace collectorhubAppWpf.ViewModel
             NavigateToCreateUserCommand = new RelayCommand(param => OpenCreateUserView());
             NavigateToEditUserCommand = new RelayCommand(param => OpenUpdateUserView());
             ShowTaskViewCommand = new RelayCommand(param => OpenTaskView());
+            ShowGamificationViewCommand = new RelayCommand(param => OpenGamificationView());
+        }
+
+        private void OpenGamificationView()
+        {
+            CurrentView = new CreateGamificationView();
         }
 
         private void OpenTaskView()
