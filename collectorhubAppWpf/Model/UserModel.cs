@@ -22,6 +22,15 @@ namespace collectorhubAppWpf.Model
         private DateTime? _premiumStartDate; // Cambiar a DateTime?
         private DateTime? _premiumEndDate;   // Cambiar a DateTime?
 
+        private string _profileImageUrl;
+
+        [JsonProperty("profileImageUrl")]
+        public string ProfileImageUrl
+        {
+            get { return _profileImageUrl; }
+            set { _profileImageUrl = value; OnPropertyChanged(nameof(ProfileImageUrl)); }
+        }
+
         [JsonProperty("isPremium")]
         public bool IsPremium
         {

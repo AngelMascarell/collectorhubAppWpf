@@ -48,17 +48,13 @@ namespace collectorhubAppWpf.ViewModel
                         {
                             if (!string.IsNullOrWhiteSpace(gamification.ImageUrl))
                             {
-                                // Construye la URL completa de la imagen
                                 string imageUrl = $"http://localhost:8080{gamification.ImageUrl}";
 
-                                // Carga la imagen como un arreglo de bytes
                                 var imageBytes = await LoadImageAsync(imageUrl);
 
-                                // Si la imagen se carga correctamente, puedes usarla
                                 if (imageBytes != null)
                                 {
-                                    // Aquí podrías convertir los bytes de la imagen a una imagen en formato WPF (como BitmapImage)
-                                    gamification.ImageSource = ConvertBytesToImage(imageBytes); // Método que implementaremos a continuación
+                                    gamification.ImageSource = ConvertBytesToImage(imageBytes);
                                 }
                             }
                             GamificationResponses.Add(gamification);
@@ -84,7 +80,6 @@ namespace collectorhubAppWpf.ViewModel
                 var response = await _httpClient.GetAsync(imageUrl);
                 if (response.IsSuccessStatusCode)
                 {
-                    // Lee el contenido de la imagen como un arreglo de bytes
                     return await response.Content.ReadAsByteArrayAsync();
                 }
                 else
@@ -106,10 +101,10 @@ namespace collectorhubAppWpf.ViewModel
             {
                 var image = new BitmapImage();
                 image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad; // Carga la imagen completamente
+                image.CacheOption = BitmapCacheOption.OnLoad;
                 image.StreamSource = stream;
                 image.EndInit();
-                image.Freeze(); // Hace la imagen inmutable para evitar problemas de acceso desde diferentes hilos
+                image.Freeze();
                 return image;
             }
         }

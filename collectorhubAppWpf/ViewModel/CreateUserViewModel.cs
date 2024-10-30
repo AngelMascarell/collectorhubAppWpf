@@ -11,6 +11,8 @@ using collectorhubAppWpf.Model;
 using System.Windows.Controls;
 using collectorhubAppWpf.View;
 using collectorhubAppWpf.Stores;
+using Microsoft.Win32;
+using System.IO;
 
 namespace collectorhubAppWpf.ViewModel
 {
@@ -26,6 +28,18 @@ namespace collectorhubAppWpf.ViewModel
         private DateTime? _premiumStartDate;
 
         private DateTime? _premiumEndDate;
+
+        private string _profileImageUrl;
+
+        public string ProfileImageUrl
+        {
+            get => _profileImageUrl;
+            set
+            {
+                _profileImageUrl = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string Username
         {
@@ -70,6 +84,8 @@ namespace collectorhubAppWpf.ViewModel
         public ICommand SaveCommand { get; }
         public ICommand ShowManageUsersViewCommand { get; }
 
+        public ICommand SelectImageCommand { get; }
+
         private readonly HttpClient _httpClient;
 
         private UserControl _currentView;
@@ -93,6 +109,7 @@ namespace collectorhubAppWpf.ViewModel
             _httpClient = new HttpClient();
             SaveCommand = new RelayCommand(async param => await SaveUser());
             ShowManageUsersViewCommand = new RelayCommand(param => Cancel(new InicioViewModel(navigationStore)));
+            SelectImageCommand = new RelayCommand(param => SelectImage());
 
             InicioViewModel = inicioViewModel;
         }
@@ -105,42 +122,89 @@ namespace collectorhubAppWpf.ViewModel
 
         private async Task SaveUser()
         {
-            var newUser = new
+            if (!string.IsNullOrEmpty(ProfileImageUrl))
             {
-                username = Username,
-                email = Email,
-                birthdate = Birthdate?.ToString("yyyy-MM-dd"),
-                registerDate = DateTime.Now.ToString("yyyy-MM-dd"),
-                mangas = new List<object>(),
-                password = Password,
-                isPremium = false,
-                premiumStartDate = "",
-                premiumEndDate = ""
-            };
-
-            var json = JsonConvert.SerializeObject(newUser);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            try
-            {
-                var response = await _httpClient.PostAsync("http://localhost:8080/user/new", content);
-                _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
-
-                if (response.IsSuccessStatusCode)
+                var imageUrl = await UploadImageAsync(ProfileImageUrl);
+                if (!string.IsNullOrEmpty(imageUrl)) // Cierre de paréntesis añadido
                 {
-                    MessageBox.Show("Usuario creado exitosamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                    ResetForm();
+                    var newUser = new
+                    {
+                        username = Username,
+                        email = Email,
+                        birthdate = Birthdate?.ToString("yyyy-MM-dd"),
+                        registerDate = DateTime.Now.ToString("yyyy-MM-dd"),
+                        mangas = new List<object>(),
+                        password = Password,
+                        isPremium = false,
+                        premiumStartDate = "",
+                        premiumEndDate = "",
+                        profileImageUrl = imageUrl  // Asegúrate de que coincide con el nombre de la propiedad en tu entidad.
+                    };
+
+                    var json = JsonConvert.SerializeObject(newUser);
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    try
+                    {
+                        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AccessToken);
+
+                        var response = await _httpClient.PostAsync("http://localhost:8080/user/new", content);
+
+                        if (response.IsSuccessStatusCode)
+                        {
+                            MessageBox.Show("Usuario creado exitosamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                            ResetForm();
+                        }
+                        else
+                        {
+                            var errorMessage = await response.Content.ReadAsStringAsync();
+                            MessageBox.Show($"Error al crear el usuario: {errorMessage}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error de conexión: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
                 else
                 {
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"Error al crear el usuario: {errorMessage}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error al subir la imagen de perfil.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch (Exception ex)
+        }
+
+
+        private void SelectImage()
+        {
+            var openFileDialog = new OpenFileDialog
             {
-                MessageBox.Show($"Error de conexión: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;",
+                Title = "Select a Profile Image"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                ProfileImageUrl = openFileDialog.FileName;
             }
+        }
+
+        private async Task<string> UploadImageAsync(string imagePath)
+        {
+            using var content = new MultipartFormDataContent();
+            using var fileStream = File.OpenRead(imagePath);
+            var fileName = Path.GetFileName(imagePath);
+
+            var fileContent = new StreamContent(fileStream);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+
+            content.Add(fileContent, "file", fileName);
+
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
+            var response = await _httpClient.PostAsync("http://localhost:8080/gamification/upload-image", content);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync();
         }
 
 

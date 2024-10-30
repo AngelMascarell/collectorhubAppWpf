@@ -15,34 +15,38 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid Margin="20" Background="#F5F5F5">
+    <Grid Background="#F5F5F5">
         <StackPanel>
             <TextBlock Text="All Gamifications" FontSize="24" FontWeight="Bold" 
-                       Margin="0,0,0,20" HorizontalAlignment="Center" />
+                       Margin="0,20,0,20" HorizontalAlignment="Center" />
 
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
-                <WrapPanel>
-                    <ItemsControl ItemsSource="{Binding GamificationResponses}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="#BDBDBD" BorderThickness="1" Margin="5" Padding="10" Background="White" CornerRadius="5" Width="250">
-                                    <StackPanel>
-                                        <Image Source="{Binding ImageSource}" Width="100" Height="100" Stretch="UniformToFill" Margin="0,0,0,10"/>
-                                        <TextBlock Text="{Binding Title}" FontWeight="Bold" Margin="0,0,0,5"/>
-                                        <TextBlock Text="{Binding Description}" TextWrapping="Wrap" 
-                                                   MaxHeight="50" Margin="0,0,0,5"/>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                            <Button Content="Edit" Command="{Binding DataContext.EditGamificationCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" 
-                                                    Background="#2196F3" Foreground="White" Padding="5" Margin="5,0,0,0"/>
-                                            <Button Content="Delete" Command="{Binding DataContext.DeleteGamificationCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" 
-                                                    Background="#E53935" Foreground="White" Padding="5"/>
-                                        </StackPanel>
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <ItemsControl ItemsSource="{Binding GamificationResponses}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#BDBDBD" BorderThickness="1" Margin="5" Padding="10" Background="White" CornerRadius="5" Width="250">
+                                <StackPanel>
+                                    <Image Source="{Binding ImageSource}" Width="200" Height="100" Stretch="UniformToFill" Margin="0,0,0,10"/>
+                                    <TextBlock Text="{Binding Title}" FontWeight="Bold" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap" 
+                                               MaxHeight="50" Margin="0,0,0,5" HorizontalAlignment="Center"/>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <Button Content="Edit" Command="{Binding DataContext.EditGamificationCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" 
+                                                Background="#2196F3" Foreground="White" Padding="5" Margin="5,0,0,0"/>
+                                        <Button Content="Delete" Command="{Binding DataContext.DeleteGamificationCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" 
+                                                Background="#E53935" Foreground="White" Padding="5"/>
                                     </StackPanel>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </WrapPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </ScrollViewer>
         </StackPanel>
     </Grid>

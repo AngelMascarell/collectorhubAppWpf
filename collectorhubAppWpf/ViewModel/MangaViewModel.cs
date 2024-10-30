@@ -10,6 +10,8 @@ using System.Text;
 using System.IO;
 using MVVM.Commands;
 using collectorhubAppWpf.ViewModel;
+using Microsoft.Win32;
+using System.Net.Http.Headers;
 
 namespace collectorhubAppWpf.ViewModel
 {
@@ -19,11 +21,14 @@ namespace collectorhubAppWpf.ViewModel
         private MangaModel _mangaModel;
         private bool _isMangaTitleUnique = true;
 
+        public ICommand SelectImageCommand { get; }
+        private string _imageUrl;
         public MangaViewModel()
         {
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("http://localhost:8080/");
             _mangaModel = new MangaModel();
+            SelectImageCommand = new RelayCommand(param => SelectImage());
         }
 
         public MangaViewModel(MangaModel mangaModel)
@@ -31,9 +36,16 @@ namespace collectorhubAppWpf.ViewModel
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("http://localhost:8080/");
             _mangaModel = mangaModel;
+            SelectImageCommand = new RelayCommand(param => SelectImage());
         }
 
         // Properties
+        public string ImageUrl
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = value; OnPropertyChanged(nameof(ImageUrl)); }
+        }
+
         public long Id
         {
             get { return _mangaModel.Id; }
@@ -164,43 +176,49 @@ namespace collectorhubAppWpf.ViewModel
         {
             try
             {
-                var mangaRequest = new MangaModel
+                //var imageUrl = "http://localhost:8080/gamification/images/3494d2e5-9c8a-46e0-a970-7bce4c7523e2_Miyamoto-Musashi.jpg";
+                if (!string.IsNullOrEmpty(ImageUrl))
                 {
-                    Id = Id,
-                    Title = Title,
-                    Author = Author,
-                    GenreId = GenreId,
-                    Chapters = Chapters,
-                    Completed = Completed
-                };
+                    var imageUrl = await UploadImageAsync(ImageUrl);
+                    if (!string.IsNullOrEmpty(imageUrl))
+                    {
+                        ImageUrl = imageUrl;
+                    }
 
-                var jsonContent = JsonConvert.SerializeObject(mangaRequest);
-                var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+                    var mangaRequest = new MangaModel
+                    {
+                        Id = Id,
+                        Title = Title,
+                        Author = Author,
+                        GenreId = GenreId,
+                        Chapters = Chapters,
+                        Completed = Completed,
+                        ImageUrl = imageUrl
+                    };
 
-                // Intentar crear el manga en el servidor
-                //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+                    var jsonContent = JsonConvert.SerializeObject(mangaRequest);
+                    var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                var response = await _httpClient.PostAsync("manga", content);
+                    //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    // Mostrar mensaje de éxito si el manga fue creado correctamente
-                    MessageBox.Show("Manga creado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
-                {
-                    // Si el servidor retorna un conflicto (409), significa que ya existe un manga con el mismo título
-                    MessageBox.Show("Ya existe un manga con ese título. Intente con otro título.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    // Otros errores
-                    MessageBox.Show("Ocurrió un error al crear el manga.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    var response = await _httpClient.PostAsync("manga", content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Manga creado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+                    {
+                        MessageBox.Show("Ya existe un manga con ese título. Intente con otro título.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrió un error al crear el manga.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                // Manejar las excepciones generales y mostrar un mensaje de error
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -257,7 +275,6 @@ namespace collectorhubAppWpf.ViewModel
             response.EnsureSuccessStatusCode();
         }
 
-        // Example Command
         private ICommand _saveCommand;
         public ICommand SaveCommand
         {
@@ -272,6 +289,39 @@ namespace collectorhubAppWpf.ViewModel
                 }
                 return _saveCommand;
             }
+        }
+
+        private void SelectImage()
+        {
+            var openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;",
+                Title = "Select a Profile Image"
+            };
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                ImageUrl = openFileDialog.FileName;
+            }
+        }
+
+        private async Task<string> UploadImageAsync(string imagePath)
+        {
+            using var content = new MultipartFormDataContent();
+            using var fileStream = File.OpenRead(imagePath);
+            var fileName = Path.GetFileName(imagePath);
+
+            var fileContent = new StreamContent(fileStream);
+            fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
+
+            content.Add(fileContent, "file", fileName);
+
+            //_httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
+
+            var response = await _httpClient.PostAsync("http://localhost:8080/gamification/upload-image", content);
+            response.EnsureSuccessStatusCode();
+
+            return await response.Content.ReadAsStringAsync();
         }
 
         // Método que valida si se puede guardar y establece el mensaje de error correspondiente

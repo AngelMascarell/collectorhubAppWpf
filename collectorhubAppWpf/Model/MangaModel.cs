@@ -14,6 +14,15 @@ namespace collectorhubAppWpf.Model
         private int _chapters;
         private bool _completed;
 
+        private string _imageUrl;
+
+        [JsonProperty("imageUrl")]
+        public string ImageUrl
+        {
+            get { return _imageUrl; }
+            set { _imageUrl = value; OnPropertyChanged(nameof(ImageUrl)); }
+        }
+
         [JsonProperty("id")]
         public long Id
         {
