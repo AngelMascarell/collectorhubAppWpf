@@ -353,7 +353,6 @@ namespace collectorhubAppWpf.ViewModel
         {
             string apiUrl = "http://localhost:8080/user/getUsersFilter";
 
-            // Crear el objeto de solicitud
             var filterRequest = new
             {
                 username = Username,
@@ -367,24 +366,18 @@ namespace collectorhubAppWpf.ViewModel
             {
                 try
                 {
-                    // Añadir el token de autenticación
                     client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
 
-                    // Serializar el objeto de solicitud a JSON
                     var jsonContent = JsonConvert.SerializeObject(filterRequest);
                     var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-                    // Realizar la solicitud HTTP POST
-                    var response = await client.PostAsync(apiUrl, content); // Cambiado a PostAsync
+                    var response = await client.PostAsync(apiUrl, content);
 
-                    // Verificar la respuesta
                     if (response.IsSuccessStatusCode)
                     {
                         string jsonResponse = await response.Content.ReadAsStringAsync();
-                        // Deserializar la respuesta
                         Users = JsonConvert.DeserializeObject<ObservableCollection<UserModel>>(jsonResponse);
 
-                        // Reiniciar la paginación
                         _currentPageIndex = 0;
 
                         // Notificar cambios
