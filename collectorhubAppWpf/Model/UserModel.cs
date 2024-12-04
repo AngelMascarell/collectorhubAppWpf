@@ -19,10 +19,12 @@ namespace collectorhubAppWpf.Model
         private List<TaskModel> _tasks;
 
         private bool _isPremium;
-        private DateTime? _premiumStartDate; // Cambiar a DateTime?
-        private DateTime? _premiumEndDate;   // Cambiar a DateTime?
+        private DateTime? _premiumStartDate;
+        private DateTime? _premiumEndDate;
 
         private string _profileImageUrl;
+
+        private List<MangaModel> _desiredMangas;
 
         [JsonProperty("profileImageUrl")]
         public string ProfileImageUrl
@@ -39,14 +41,14 @@ namespace collectorhubAppWpf.Model
         }
 
         [JsonProperty("premiumStartDate")]
-        public DateTime? PremiumStartDate // Cambiar a DateTime?
+        public DateTime? PremiumStartDate
         {
             get { return _premiumStartDate; }
             set { _premiumStartDate = value; OnPropertyChanged(nameof(PremiumStartDate)); }
         }
 
         [JsonProperty("premiumEndDate")]
-        public DateTime? PremiumEndDate // Cambiar a DateTime?
+        public DateTime? PremiumEndDate
         {
             get { return _premiumEndDate; }
             set { _premiumEndDate = value; OnPropertyChanged(nameof(PremiumEndDate)); }
@@ -100,6 +102,13 @@ namespace collectorhubAppWpf.Model
         {
             get { return _mangas; }
             set { _mangas = value; OnPropertyChanged(nameof(Mangas)); }
+        }
+
+        [JsonProperty("desiredMangas")]
+        public List<MangaModel> DesiredMangas
+        {
+            get { return _desiredMangas; }
+            set { _desiredMangas = value; OnPropertyChanged(nameof(DesiredMangas)); }
         }
 
         [JsonProperty("tasks")]

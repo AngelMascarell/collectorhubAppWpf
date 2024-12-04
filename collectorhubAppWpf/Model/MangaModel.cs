@@ -16,6 +16,9 @@ namespace collectorhubAppWpf.Model
 
         private string _imageUrl;
 
+        private string _synopsis;
+        private DateTime? _releaseDate;
+
         [JsonProperty("imageUrl")]
         public string ImageUrl
         {
@@ -42,6 +45,20 @@ namespace collectorhubAppWpf.Model
         {
             get { return _author; }
             set { _author = value; OnPropertyChanged(nameof(Author)); }
+        }
+
+        [JsonProperty("synopsis")]
+        public string Synopsis
+        {
+            get { return _synopsis; }
+            set { _synopsis = value; OnPropertyChanged(nameof(Synopsis)); }
+        }
+
+        [JsonProperty("releasedate")]
+        public DateTime? ReleaseDate
+        {
+            get { return _releaseDate; }
+            set { _releaseDate = value; OnPropertyChanged(nameof(ReleaseDate)); }
         }
 
         [JsonProperty("genreId")]

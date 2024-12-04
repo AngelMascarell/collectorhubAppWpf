@@ -82,7 +82,7 @@ namespace collectorhubAppWpf.ViewModel
                         // Deserialize JSON to dynamic object
                         dynamic responseObject = JsonConvert.DeserializeObject(jsonContent);
 
-                        string accessToken = responseObject.token;
+                        string accessToken = responseObject.accessToken;
                         //string refreshToken = responseObject.refreshToken;
 
                         // Guardar los tokens en Properties (o donde lo necesites)

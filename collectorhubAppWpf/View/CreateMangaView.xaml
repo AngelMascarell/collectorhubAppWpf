@@ -23,6 +23,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -80,18 +82,51 @@
                  BorderBrush="#CCCCCC" 
                  FontSize="16"/>
 
-        <TextBlock Text="Completado:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
+        <TextBlock Text="Sinopsis:" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
+        <TextBox Text="{Binding Synopsis, UpdateSourceTrigger=PropertyChanged}" 
+                 Grid.Row="5" 
+                 Grid.Column="1" 
+                 Margin="5" 
+                 Padding="5" 
+                 Background="#F0F0F0" 
+                 BorderBrush="#CCCCCC" 
+                 FontSize="16" 
+                 TextWrapping="Wrap"/>
+
+        <TextBlock Text="Fecha de Lanzamiento:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
+        <DatePicker SelectedDate="{Binding ReleaseDate, UpdateSourceTrigger=PropertyChanged}" 
+                    Grid.Row="6" 
+                    Grid.Column="1" 
+                    Margin="5" 
+                    Padding="5" 
+                    Background="#F0F0F0" 
+                    BorderBrush="#CCCCCC" 
+                    FontSize="16"/>
+
+        <TextBlock Text="Completado:" Grid.Row="7" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
         <CheckBox IsChecked="{Binding Completed, UpdateSourceTrigger=PropertyChanged}" 
-                  Grid.Row="5" 
+                  Grid.Row="7" 
                   Grid.Column="1" 
                   Margin="5" 
                   Padding="5" 
                   HorizontalAlignment="Left" 
                   VerticalAlignment="Center"/>
 
+        <TextBlock Text="Imagen de Portada:" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" Margin="5">
+            <Button Content="Seleccionar Imagen" 
+                    Command="{Binding SelectImageCommand}" 
+                    Width="150" Height="40"
+                    Margin="0,0,10,0"/>
+            <Image Source="{Binding ImageUrl}" 
+                   Width="100" Height="120" 
+                   Stretch="UniformToFill" 
+                   Margin="10,0,0,0"/>
+        </StackPanel>
+
         <Button Content="Guardar" 
                 Command="{Binding SaveCommand}" 
-                Grid.Row="7" 
+                Grid.Row="9" 
                 Grid.Column="0" 
                 Grid.ColumnSpan="2" 
                 HorizontalAlignment="Center"
@@ -106,21 +141,9 @@
                 BorderThickness="2"
                 Cursor="Hand" Style="{StaticResource ButtonStyle}"/>
 
-        <TextBlock Text="Imagen de Portada:" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="30,10,10,10" FontWeight="Bold"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Margin="5">
-            <Button Content="Seleccionar Imagen" 
-                    Command="{Binding SelectImageCommand}" 
-                    Width="150" Height="40"
-                    Margin="0,0,10,0"/>
-            <Image Source="{Binding ImageUrl}" 
-                   Width="100" Height="120" 
-                   Stretch="UniformToFill" 
-                   Margin="10,0,0,0"/>
-        </StackPanel>
-
         <!-- Mensaje de error o aviso -->
         <TextBlock Text="{Binding ErrorMessage}" 
-                   Grid.Row="7" 
+                   Grid.Row="10" 
                    Grid.Column="0" 
                    Grid.ColumnSpan="2" 
                    Foreground="Red" 

@@ -39,7 +39,6 @@ namespace collectorhubAppWpf.ViewModel
             SelectImageCommand = new RelayCommand(param => SelectImage());
         }
 
-        // Properties
         public string ImageUrl
         {
             get { return _imageUrl; }
@@ -69,7 +68,6 @@ namespace collectorhubAppWpf.ViewModel
                     _mangaModel.Title = value;
                     OnPropertyChanged(nameof(Title));
 
-                    // Verificar si el título es único
                     CheckIfTitleIsUniqueAsync();
                 }
             }
@@ -127,9 +125,34 @@ namespace collectorhubAppWpf.ViewModel
             }
         }
 
+        public string Synopsis
+        {
+            get { return _mangaModel.Synopsis; }
+            set
+            {
+                if (_mangaModel.Synopsis != value)
+                {
+                    _mangaModel.Synopsis = value;
+                    OnPropertyChanged(nameof(Synopsis));
+                }
+            }
+        }
+
+        public DateTime? ReleaseDate
+        {
+            get { return _mangaModel.ReleaseDate; }
+            set
+            {
+                if (_mangaModel.ReleaseDate != value)
+                {
+                    _mangaModel.ReleaseDate = value;
+                    OnPropertyChanged(nameof(ReleaseDate));
+                }
+            }
+        }
+
         private string _errorMessage;
 
-        // Propiedad para el mensaje de error o aviso
         public string ErrorMessage
         {
             get { return _errorMessage; }
@@ -145,7 +168,6 @@ namespace collectorhubAppWpf.ViewModel
 
         public async Task<bool> CheckIfTitleExistsAsync(string title)
         {
-            // Si el título está vacío, retorna false (título no existe)
             if (string.IsNullOrEmpty(title))
             {
                 return false;
@@ -193,7 +215,9 @@ namespace collectorhubAppWpf.ViewModel
                         GenreId = GenreId,
                         Chapters = Chapters,
                         Completed = Completed,
-                        ImageUrl = imageUrl
+                        ImageUrl = imageUrl,
+                        Synopsis = Synopsis,
+                        ReleaseDate = ReleaseDate,
                     };
 
                     var jsonContent = JsonConvert.SerializeObject(mangaRequest);
@@ -206,6 +230,7 @@ namespace collectorhubAppWpf.ViewModel
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("Manga creado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ResetForm();
                     }
                     else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
                     {
@@ -324,10 +349,8 @@ namespace collectorhubAppWpf.ViewModel
             return await response.Content.ReadAsStringAsync();
         }
 
-        // Método que valida si se puede guardar y establece el mensaje de error correspondiente
         private bool CanSave()
         {
-            // Reiniciar el mensaje de error
             ErrorMessage = string.Empty;
 
             if (string.IsNullOrEmpty(Title))
@@ -354,5 +377,19 @@ namespace collectorhubAppWpf.ViewModel
             // Si no hay ningún error, se puede guardar
             return string.IsNullOrEmpty(ErrorMessage);
         }
+
+        public void ResetForm()
+        {
+            Title = string.Empty;
+            Author = string.Empty;
+            GenreId = 0;
+            Chapters = 0;
+            Synopsis = string.Empty;
+            ReleaseDate = null;
+            Completed = false;
+            ImageUrl = null;
+            ErrorMessage = string.Empty;
+        }
+
     }
 }

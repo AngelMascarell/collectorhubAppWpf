@@ -1,13 +1,10 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading.Tasks;
 using MVVM.Commands;
 using System.Windows.Input;
 using System.Windows;
 using Newtonsoft.Json;
-using collectorhubAppWpf.Model;
 using System.Windows.Controls;
 using collectorhubAppWpf.View;
 using collectorhubAppWpf.Stores;
@@ -117,61 +114,68 @@ namespace collectorhubAppWpf.ViewModel
         private void Cancel(InicioViewModel inicioViewModel)
         {
             
-            CurrentView = new UsersView(inicioViewModel); // Pasar 'this' como el InicioViewModel actual
+            CurrentView = new UsersView(inicioViewModel);
         }
 
         private async Task SaveUser()
         {
-            if (!string.IsNullOrEmpty(ProfileImageUrl))
+            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Email) ||
+                string.IsNullOrEmpty(Password) || Birthdate == null || string.IsNullOrEmpty(ProfileImageUrl))
             {
-                var imageUrl = await UploadImageAsync(ProfileImageUrl);
-                if (!string.IsNullOrEmpty(imageUrl)) // Cierre de paréntesis añadido
+                MessageBox.Show("Por favor, complete todos los campos requeridos: nombre de usuario, email, contraseña, fecha de nacimiento e imagen de perfil.",
+                                "Error de validación", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            var imageUrl = await UploadImageAsync(ProfileImageUrl);
+            if (!string.IsNullOrEmpty(imageUrl))
+            {
+                var newUser = new
                 {
-                    var newUser = new
+                    username = Username,
+                    email = Email,
+                    birthdate = Birthdate?.ToString("yyyy-MM-dd"),
+                    registerDate = DateTime.Now.ToString("yyyy-MM-dd"),
+                    mangas = new List<object>(),
+                    password = Password,
+                    isPremium = false,
+                    premiumStartDate = "",
+                    premiumEndDate = "",
+                    profileImageUrl = imageUrl,
+                    desiredMangas = new List<object>(),
+                };
+
+                var json = JsonConvert.SerializeObject(newUser);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                try
+                {
+                    //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AccessToken);
+
+                    var response = await _httpClient.PostAsync("http://localhost:8080/user/new", content);
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        username = Username,
-                        email = Email,
-                        birthdate = Birthdate?.ToString("yyyy-MM-dd"),
-                        registerDate = DateTime.Now.ToString("yyyy-MM-dd"),
-                        mangas = new List<object>(),
-                        password = Password,
-                        isPremium = false,
-                        premiumStartDate = "",
-                        premiumEndDate = "",
-                        profileImageUrl = imageUrl  // Asegúrate de que coincide con el nombre de la propiedad en tu entidad.
-                    };
-
-                    var json = JsonConvert.SerializeObject(newUser);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    try
-                    {
-                        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AccessToken);
-
-                        var response = await _httpClient.PostAsync("http://localhost:8080/user/new", content);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            MessageBox.Show("Usuario creado exitosamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
-                            ResetForm();
-                        }
-                        else
-                        {
-                            var errorMessage = await response.Content.ReadAsStringAsync();
-                            MessageBox.Show($"Error al crear el usuario: {errorMessage}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        MessageBox.Show("Usuario creado exitosamente", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ResetForm();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show($"Error de conexión: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        var errorMessage = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show($"Error al crear el usuario: {errorMessage}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Error al subir la imagen de perfil.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Error de conexión: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            else
+            {
+                MessageBox.Show("Error al subir la imagen de perfil.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
 
 
         private void SelectImage()
@@ -214,6 +218,7 @@ namespace collectorhubAppWpf.ViewModel
             Email = string.Empty;
             Birthdate = null;
             Password = string.Empty;
+            ProfileImageUrl = string.Empty;
         }
     }
 }
