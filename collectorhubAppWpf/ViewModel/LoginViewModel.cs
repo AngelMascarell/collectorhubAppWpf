@@ -57,47 +57,63 @@ namespace collectorhubAppWpf.ViewModel
                 return;
             }
 
-            string apiUrl = "http://localhost:8080/auth/login";
+            string loginUrl = "http://localhost:8080/auth/login";
+            string userDetailsUrl = "http://localhost:8080/user/getOne/{0}";
 
             using (HttpClient client = new HttpClient())
             {
                 try
                 {
-                    // Crear el objeto que quieres enviar como JSON
                     var loginRequest = new
                     {
                         username = Username,
                         password = Password
                     };
 
-                    // Convertir a JSON y enviar con el Content-Type correcto
-                    var content = new StringContent(JsonConvert.SerializeObject(loginRequest), Encoding.UTF8, "application/json");
+                    var loginContent = new StringContent(JsonConvert.SerializeObject(loginRequest), Encoding.UTF8, "application/json");
 
-                    HttpResponseMessage response = await client.PostAsync(apiUrl, content);
+                    HttpResponseMessage loginResponse = await client.PostAsync(loginUrl, loginContent);
 
-                    if (response.IsSuccessStatusCode)
+                    if (loginResponse.IsSuccessStatusCode)
                     {
-                        string jsonContent = await response.Content.ReadAsStringAsync();
+                        string loginJsonContent = await loginResponse.Content.ReadAsStringAsync();
+                        dynamic loginResponseObject = JsonConvert.DeserializeObject(loginJsonContent);
 
-                        // Deserialize JSON to dynamic object
-                        dynamic responseObject = JsonConvert.DeserializeObject(jsonContent);
+                        string accessToken = loginResponseObject.accessToken;
+                        string userId = loginResponseObject.userId;
 
-                        string accessToken = responseObject.accessToken;
-                        //string refreshToken = responseObject.refreshToken;
+                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
 
-                        // Guardar los tokens en Properties (o donde lo necesites)
-                        Properties.Settings.Default.AccessToken = accessToken;
-                       // Properties.Settings.Default.RefreshToken = refreshToken;
-                        Properties.Settings.Default.Username = Username;
-                        Properties.Settings.Default.Save();
+                        HttpResponseMessage userDetailsResponse = await client.GetAsync(string.Format(userDetailsUrl, userId));
 
-                        // Navegar a la siguiente vista (Inicio)
-                        _navigationStore.CurrentViewModel = new InicioViewModel(_navigationStore);
+                        if (userDetailsResponse.IsSuccessStatusCode)
+                        {
+                            string userDetailsJsonContent = await userDetailsResponse.Content.ReadAsStringAsync();
+                            dynamic userDetailsResponseObject = JsonConvert.DeserializeObject(userDetailsJsonContent);
 
+                            string roleName = userDetailsResponseObject.role.name;
+
+                            if (roleName == "ADMIN")
+                            {
+                                Properties.Settings.Default.AccessToken = accessToken;
+                                Properties.Settings.Default.Username = Username;
+                                Properties.Settings.Default.Save();
+
+                                _navigationStore.CurrentViewModel = new InicioViewModel(_navigationStore);
+                            }
+                            else
+                            {
+                                MessageBox.Show("No tienes permisos de administrador para iniciar sesión.");
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error al recuperar los detalles del usuario.");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show($"Username or Password incorrect");
+                        MessageBox.Show("Username o Password incorrectos.");
                     }
                 }
                 catch (HttpRequestException ex)
@@ -110,5 +126,6 @@ namespace collectorhubAppWpf.ViewModel
                 }
             }
         }
+
     }
 }

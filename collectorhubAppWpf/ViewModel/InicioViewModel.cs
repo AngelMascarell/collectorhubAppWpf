@@ -23,7 +23,6 @@ namespace collectorhubAppWpf.ViewModel
             }
         }
 
-        // Commands para cambiar las vistas
         public ICommand ShowCreateGenreViewCommand { get; set; }
         public ICommand ShowAddMangaViewCommand { get; set; }
         public ICommand ShowCreateMangaListViewCommand { get; set; }
@@ -56,7 +55,6 @@ namespace collectorhubAppWpf.ViewModel
         {
             CurrentView = new WelcomeView();
 
-            // Inicializamos los comandos
             ShowCreateGenreViewCommand = new RelayCommand(param => ShowCreateGenreView());
             ShowAddMangaViewCommand = new RelayCommand(param => ShowAddMangaView());
             ShowCreateMangaListViewCommand = new RelayCommand(param => ShowCreateMangaListView());

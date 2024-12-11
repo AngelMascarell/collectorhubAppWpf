@@ -44,9 +44,8 @@ namespace collectorhubAppWpf.ViewModel
                 if (response.IsSuccessStatusCode)
                 {
                     var reviewsJson = await response.Content.ReadAsStringAsync();
-                    var jObject = JObject.Parse(reviewsJson); // Analiza el JSON en un JObject
+                    var jObject = JObject.Parse(reviewsJson);
 
-                    // Extrae la lista de reseñas
                     var reviewsList = jObject["appReviewResponseList"].ToObject<List<ReviewModel>>();
 
                     AppReviews.Clear();
@@ -54,7 +53,7 @@ namespace collectorhubAppWpf.ViewModel
                     foreach (var review in reviewsList)
                     {
                         AppReviews.Add(review);
-                        await LoadUsernameForReview(review);  // Cargar el username si es necesario
+                        await LoadUsernameForReview(review);
                     }
                 }
                 else

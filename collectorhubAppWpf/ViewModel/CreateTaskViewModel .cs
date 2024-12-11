@@ -47,47 +47,40 @@ namespace collectorhubAppWpf.ViewModel
 
         public CreateTaskViewModel()
         {
-            // Inicializamos la lista de tipos de tarea
             TaskTypes = new ObservableCollection<string>
             {
                 "General", "Diaria", "Semanal", "Mensual", "Especial"
             };
 
-            // Comando para crear la tarea
-            CreateTaskCommand = new RelayCommand(param => CreateTask());
+            CreateTaskCommand = new RelayCommand(param => CreateTask(), param => AreFieldsValid());
 
-            // Inicializa el HttpClient
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri("http://localhost:8080/") // Cambia la URL base según sea necesario
+                BaseAddress = new Uri("http://localhost:8080/")
             };
         }
 
         private async void CreateTask()
         {
-            // Creamos un objeto de solicitud de tarea
             var taskRequest = new
             {
-                description = TaskDescription, // Cambiar a minúscula
-                isCompleted = false, // La tarea no está completada al crearla
-                title = TaskName, // Cambiar a minúscula
-                taskType = SelectedTaskType // Cambiar a minúscula
+                description = TaskDescription,
+                isCompleted = false,
+                title = TaskName,
+                taskType = SelectedTaskType
             };
 
-            // Convertimos el objeto a JSON
             var json = JsonConvert.SerializeObject(taskRequest);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             try
             {
-                // Realizamos la solicitud POST para crear la tarea
                 _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
                 var response = await _httpClient.PostAsync("/task/new", content);
 
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Tarea creada con éxito.");
-                    // Aquí puedes limpiar los campos o manejar el éxito de otra manera
                 }
                 else
                 {
@@ -99,5 +92,13 @@ namespace collectorhubAppWpf.ViewModel
                 MessageBox.Show("Error de conexión: " + ex.Message);
             }
         }
+
+        private bool AreFieldsValid()
+        {
+            return !string.IsNullOrWhiteSpace(TaskName) &&
+                   !string.IsNullOrWhiteSpace(TaskDescription) &&
+                   SelectedTaskType != null;
+        }
+
     }
 }

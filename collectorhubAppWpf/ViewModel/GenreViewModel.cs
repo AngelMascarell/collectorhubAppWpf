@@ -32,7 +32,6 @@ namespace collectorhubAppWpf.ViewModel
             _genreModel = genreModel;
         }
 
-        // Properties
         public Guid Id
         {
             get { return _genreModel.Id; }
@@ -59,7 +58,6 @@ namespace collectorhubAppWpf.ViewModel
             }
         }
 
-        // HTTP Methods
         public async Task CreateGenreAsync()
         {
             try
@@ -140,7 +138,6 @@ namespace collectorhubAppWpf.ViewModel
             response.EnsureSuccessStatusCode();
         }
 
-        // Example Command
         private ICommand _saveCommand;
         public ICommand SaveCommand
         {
@@ -159,7 +156,6 @@ namespace collectorhubAppWpf.ViewModel
 
         private bool CanSave()
         {
-            // Implement save validation logic here
             return !string.IsNullOrEmpty(Name);
         }
     }

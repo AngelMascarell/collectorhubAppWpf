@@ -63,6 +63,18 @@ namespace collectorhubAppWpf.ViewModel
                 return;
             }
 
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                MessageBox.Show("El campo 'Nombre' no puede estar vacío.");
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                MessageBox.Show("El campo 'Descripción' no puede estar vacío.");
+                return;
+            }
+
             var mangaListRequest = new 
             {
                 listName = Name,
@@ -78,6 +90,7 @@ namespace collectorhubAppWpf.ViewModel
                 response.EnsureSuccessStatusCode();
 
                 MessageBox.Show("Lista creada exitosamente.");
+                ResetForm();
             }
             catch (HttpRequestException ex)
             {
@@ -119,6 +132,12 @@ namespace collectorhubAppWpf.ViewModel
                 Console.WriteLine($"Error al obtener los mangas: {e.Message}");
                 return new List<MangaModel>();
             }
+        }
+
+        private void ResetForm()
+        {
+            Name = string.Empty;
+            Description = string.Empty;
         }
     }
 }

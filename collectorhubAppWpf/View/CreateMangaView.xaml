@@ -141,7 +141,6 @@
                 BorderThickness="2"
                 Cursor="Hand" Style="{StaticResource ButtonStyle}"/>
 
-        <!-- Mensaje de error o aviso -->
         <TextBlock Text="{Binding ErrorMessage}" 
                    Grid.Row="10" 
                    Grid.Column="0" 

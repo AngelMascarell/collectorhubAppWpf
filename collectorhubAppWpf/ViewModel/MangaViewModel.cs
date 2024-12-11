@@ -193,7 +193,6 @@ namespace collectorhubAppWpf.ViewModel
             OnPropertyChanged(nameof(CanSave));
         }
 
-        // HTTP Methods
         public async Task CreateMangaAsync()
         {
             try
@@ -374,7 +373,6 @@ namespace collectorhubAppWpf.ViewModel
                 ErrorMessage = "El número de capítulos no puede ser negativo.";
             }
 
-            // Si no hay ningún error, se puede guardar
             return string.IsNullOrEmpty(ErrorMessage);
         }
 

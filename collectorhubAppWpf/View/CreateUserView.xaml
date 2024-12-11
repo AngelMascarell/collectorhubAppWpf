@@ -50,10 +50,8 @@
             <StackPanel Margin="0,0,0,20">
                 <TextBlock Text="Imagen de Perfil" FontSize="16" FontWeight="SemiBold" Foreground="#555"/>
 
-                <!-- Botón para seleccionar imagen -->
                 <Button Content="Seleccionar Imagen" Command="{Binding SelectImageCommand}" Width="150" Margin="0,5"/>
 
-                <!-- Vista previa de la imagen seleccionada -->
                 <Image Source="{Binding ProfileImageUrl}" Width="100" Height="100" Margin="0,10"/>
             </StackPanel>
 

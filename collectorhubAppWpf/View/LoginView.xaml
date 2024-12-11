@@ -23,7 +23,7 @@
                 <StackPanel>
                     <TextBlock FontFamily="Montserrat" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20">Iniciar Sesión</TextBlock>
 
-                    <TextBlock FontFamily="Montserrat" FontSize="14">Email</TextBlock>
+                    <TextBlock FontFamily="Montserrat" FontSize="14">Usuario</TextBlock>
                     <TextBox Text="{Binding Username}" VerticalContentAlignment="Center" FontFamily="Montserrat" FontSize="14" Height="40" Margin="0,5,0,10" Padding="10"/>
 
                     <TextBlock FontFamily="Montserrat" FontSize="14">Contraseña</TextBlock>

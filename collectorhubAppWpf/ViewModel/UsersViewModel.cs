@@ -333,7 +333,7 @@ namespace collectorhubAppWpf.ViewModel
                                          Chapters = (int)manga["chapters"],
                                          Completed = (bool)manga["completed"]
                                      }).ToList()
-                                     : new List<MangaModel>()  // Inicializa como lista vacía si no hay mangas
+                                     : new List<MangaModel>()
                         }).ToList());
                 }
             }
@@ -380,7 +380,6 @@ namespace collectorhubAppWpf.ViewModel
 
                         _currentPageIndex = 0;
 
-                        // Notificar cambios
                         OnPropertyChanged(nameof(Users));
                         OnPropertyChanged(nameof(CurrentPageUsers));
                         OnPropertyChanged(nameof(CurrentPage));

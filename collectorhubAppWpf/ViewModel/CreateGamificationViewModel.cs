@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Win32; // Para el OpenFileDialog
+using Microsoft.Win32;
 using collectorhubAppWpf.Model;
 using MVVM.Commands;
 using System.IO;
@@ -16,7 +16,6 @@ namespace collectorhubAppWpf.ViewModel
 {
     public class CreateGamificationViewModel : ViewModelBase
     {
-        // Propiedades de la gamificación
         private string _gamificationTitle;
         private string _gamificationDescription;
         private string _gamificationImageUrl;
@@ -28,7 +27,7 @@ namespace collectorhubAppWpf.ViewModel
             AddConditionCommand = new RelayCommand(param => AddCondition());
             RemoveConditionCommand = new RelayCommand(param => RemoveCondition(param));
             UploadImageCommand = new RelayCommand(param => UploadImage());
-            CreateGamificationCommand = new RelayCommand(param => CreateGamification());
+            CreateGamificationCommand = new RelayCommand(param => CreateGamification(), param => AreFieldsValid());
         }
 
         public string GamificationTitle
@@ -78,14 +77,14 @@ namespace collectorhubAppWpf.ViewModel
 
         private void AddCondition()
         {
-            GamificationConditions.Add(new GamificationConditionModel()); // Añade una nueva condición vacía
+            GamificationConditions.Add(new GamificationConditionModel());
         }
 
         private void RemoveCondition(object parameter)
         {
             if (parameter is GamificationConditionModel condition && GamificationConditions.Contains(condition))
             {
-                GamificationConditions.Remove(condition); // Elimina la condición seleccionada
+                GamificationConditions.Remove(condition);
             }
         }
 
@@ -99,51 +98,42 @@ namespace collectorhubAppWpf.ViewModel
 
             if (openFileDialog.ShowDialog() == true)
             {
-                // Usar HttpClient para subir la imagen al servidor
                 using (HttpClient client = new HttpClient())
                 {
-                    // Crear un MultipartFormDataContent para enviar el archivo
                     using (var form = new MultipartFormDataContent())
                     {
-                        // Leer el archivo seleccionado
                         var fileStream = new FileStream(openFileDialog.FileName, FileMode.Open);
                         var fileContent = new StreamContent(fileStream);
-                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg"); // Cambia según el tipo de imagen
+                        fileContent.Headers.ContentType = new MediaTypeHeaderValue("image/jpeg");
 
-                        // Añadir el contenido del archivo al formulario
                         form.Add(fileContent, "file", Path.GetFileName(openFileDialog.FileName));
 
                         try
                         {
-                            // Hacer la solicitud POST al endpoint de subida de imágenes
                             client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
                             var response = await client.PostAsync("http://localhost:8080/gamification/upload-image", form);
 
                             if (response.IsSuccessStatusCode)
                             {
-                                // Obtener la URL de la imagen desde la respuesta
                                 var imageUrl = await response.Content.ReadAsStringAsync();
-                                GamificationImageUrl = imageUrl; // Actualizar la propiedad con la URL devuelta
+                                GamificationImageUrl = imageUrl;
                             }
                             else
                             {
-                                // Manejo de errores en caso de fallo
                                 MessageBox.Show("Error al subir la imagen: " + response.ReasonPhrase);
                             }
                         }
                         catch (Exception ex)
                         {
-                            // Manejo de excepciones
                             MessageBox.Show("Excepción al subir la imagen: " + ex.Message);
                         }
                         finally
                         {
-                            fileStream.Close(); // Asegurarte de cerrar el flujo
+                            fileStream.Close();
                         }
                     }
                 }
 
-                // Notificar a la vista que ha cambiado
                 OnPropertyChanged(nameof(GamificationImageUrl));
             }
         }
@@ -189,8 +179,12 @@ namespace collectorhubAppWpf.ViewModel
             }
         }
 
-
-
+        private bool AreFieldsValid()
+        {
+            return !string.IsNullOrWhiteSpace(GamificationTitle) &&
+                   !string.IsNullOrWhiteSpace(GamificationDescription) &&
+                   !string.IsNullOrWhiteSpace(GamificationImageUrl);
+        }
 
     }
 }

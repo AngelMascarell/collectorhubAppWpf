@@ -16,10 +16,8 @@ namespace collectorhubAppWpf
             InitializeComponent();
             loginWithTokenAsync();
 
-            // Establecer el DataContext con el NavigationStore
             DataContext = new MainWindowViewModel(_navigationStore);
 
-            // Intentar iniciar sesión con el token si está disponible
             
             
 
@@ -38,7 +36,6 @@ namespace collectorhubAppWpf
                         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Properties.Settings.Default.AccessToken);
                         await client.GetStringAsync(apiUrl);
 
-                        // Cambiar a InicioViewModel si el token es válido
                         _navigationStore.CurrentViewModel = new InicioViewModel(_navigationStore);
                         return;
                     }
@@ -53,7 +50,6 @@ namespace collectorhubAppWpf
                 }
             }
 
-            // Si no hay token, establecer el LoginViewModel como CurrentViewModel
             _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore);
         }
     }
