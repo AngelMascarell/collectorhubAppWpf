@@ -81,6 +81,7 @@ namespace collectorhubAppWpf.ViewModel
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("Tarea creada con éxito.");
+                    ClearFields();
                 }
                 else
                 {
@@ -98,6 +99,13 @@ namespace collectorhubAppWpf.ViewModel
             return !string.IsNullOrWhiteSpace(TaskName) &&
                    !string.IsNullOrWhiteSpace(TaskDescription) &&
                    SelectedTaskType != null;
+        }
+
+        private void ClearFields()
+        {
+            TaskName = string.Empty;
+            TaskDescription = string.Empty;
+            SelectedTaskType = null;
         }
 
     }

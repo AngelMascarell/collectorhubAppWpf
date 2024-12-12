@@ -56,18 +56,24 @@
                     <DataTemplate>
                         <Border BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="5" Margin="0,10">
                             <StackPanel Orientation="Horizontal">
-                                <TextBox Width="200" Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" 
-                                         Margin="0,0,5,0" Padding="5" Background="#FFFFFF"/>
+                                <ComboBox Width="200" 
+                              ItemsSource="{Binding Path=DataContext.TaskTypes, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                              SelectedItem="{Binding Type, UpdateSourceTrigger=PropertyChanged}" 
+                              Margin="0,0,5,0" Padding="5" Background="#FFFFFF"/>
+
                                 <TextBox Width="100" Text="{Binding Threshold, UpdateSourceTrigger=PropertyChanged}" 
-                                         Margin="0,0,5,0" Padding="5" Background="#FFFFFF"/>
+                             Margin="0,0,5,0" Padding="5" Background="#FFFFFF"/>
+
                                 <Button Content="Eliminar" Command="{Binding Path=DataContext.RemoveConditionCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
-                                        CommandParameter="{Binding}" Margin="5,0,0,0" Padding="10,5" 
-                                        Background="#E53935" Foreground="White" Cursor="Hand"/>
+                            CommandParameter="{Binding}" Margin="5,0,0,0" Padding="10,5" 
+                            Background="#E53935" Foreground="White" Cursor="Hand"/>
                             </StackPanel>
                         </Border>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+
+
             <Button Content="Añadir condición" Command="{Binding AddConditionCommand}" 
                     Margin="0,5,0,0" Width="150" Padding="10,5" 
                     Background="#2196F3" Foreground="White" Cursor="Hand" HorizontalAlignment="Center"/>

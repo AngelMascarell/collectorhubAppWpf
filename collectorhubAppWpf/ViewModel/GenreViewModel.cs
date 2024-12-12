@@ -77,6 +77,7 @@ namespace collectorhubAppWpf.ViewModel
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("El género ha sido creado correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ClearFields();
                 }
                 else
                 {
@@ -157,6 +158,10 @@ namespace collectorhubAppWpf.ViewModel
         private bool CanSave()
         {
             return !string.IsNullOrEmpty(Name);
+        }
+
+        private void ClearFields() { 
+            Name = string.Empty;
         }
     }
 }

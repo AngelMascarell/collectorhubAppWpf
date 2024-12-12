@@ -132,10 +132,11 @@ namespace collectorhubAppWpf.ViewModel
                     updatedFields.Add("birthdate", Birthdate);
                 }
 
-                if (!string.IsNullOrWhiteSpace(Password))
+               /* if (!string.IsNullOrWhiteSpace(Password))
                 {
                     updatedFields.Add("password", Password);
                 }
+               */
 
                 if (updatedFields.Count == 0)
                 {

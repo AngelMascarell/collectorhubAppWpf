@@ -376,7 +376,28 @@ namespace collectorhubAppWpf.ViewModel
                     if (response.IsSuccessStatusCode)
                     {
                         string jsonResponse = await response.Content.ReadAsStringAsync();
-                        Users = JsonConvert.DeserializeObject<ObservableCollection<UserModel>>(jsonResponse);
+
+                        var userList = JArray.Parse(jsonResponse);
+                        Users = new ObservableCollection<UserModel>(
+                            userList.Select(user => new UserModel
+                            {
+                                Id = (long)user["userId"],
+                                Username = (string)user["username"],
+                                Email = (string)user["email"],
+                                Birthdate = (DateTime?)user["birthdate"] ?? default,
+                                RegisterDate = (DateTime?)user["registerDate"] ?? default,
+                                Mangas = user["mangas"] != null && user["mangas"].HasValues
+                                    ? ((JArray)user["mangas"]).Select(manga => new MangaModel
+                                    {
+                                        Id = (long)manga["id"],
+                                        Title = (string)manga["title"],
+                                        Author = (string)manga["author"],
+                                        GenreId = (long)manga["genreId"],
+                                        Chapters = (int)manga["chapters"],
+                                        Completed = (bool)manga["completed"]
+                                    }).ToList()
+                                    : new List<MangaModel>()
+                            }).ToList());
 
                         _currentPageIndex = 0;
 
@@ -399,6 +420,7 @@ namespace collectorhubAppWpf.ViewModel
                 }
             }
         }
+
 
 
 

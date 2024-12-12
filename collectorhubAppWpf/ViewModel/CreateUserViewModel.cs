@@ -152,7 +152,7 @@ namespace collectorhubAppWpf.ViewModel
                 {
                     //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Properties.Settings.Default.AccessToken);
 
-                    var response = await _httpClient.PostAsync("http://localhost:8080/user/new", content);
+                    var response = await _httpClient.PostAsync("http://localhost:8080/user/newAdmin", content);
 
                     if (response.IsSuccessStatusCode)
                     {

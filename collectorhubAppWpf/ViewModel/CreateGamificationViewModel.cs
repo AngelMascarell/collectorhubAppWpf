@@ -20,9 +20,16 @@ namespace collectorhubAppWpf.ViewModel
         private string _gamificationDescription;
         private string _gamificationImageUrl;
         private ObservableCollection<GamificationConditionModel> _gamificationConditions;
+        public ObservableCollection<string> TaskTypes { get; }
+
 
         public CreateGamificationViewModel()
         {
+            TaskTypes = new ObservableCollection<string>
+        {
+            "General", "Diaria", "Semanal", "Mensual", "Especial"
+        };
+
             GamificationConditions = new ObservableCollection<GamificationConditionModel>();
             AddConditionCommand = new RelayCommand(param => AddCondition());
             RemoveConditionCommand = new RelayCommand(param => RemoveCondition(param));
@@ -166,6 +173,7 @@ namespace collectorhubAppWpf.ViewModel
                     if (response.IsSuccessStatusCode)
                     {
                         MessageBox.Show("Gamificación creada con éxito.");
+                        ClearFields();
                     }
                     else
                     {
@@ -184,6 +192,14 @@ namespace collectorhubAppWpf.ViewModel
             return !string.IsNullOrWhiteSpace(GamificationTitle) &&
                    !string.IsNullOrWhiteSpace(GamificationDescription) &&
                    !string.IsNullOrWhiteSpace(GamificationImageUrl);
+        }
+
+        private void ClearFields()
+        {
+            GamificationTitle = string.Empty;
+            GamificationDescription = string.Empty;
+            GamificationImageUrl = string.Empty;
+            GamificationConditions.Clear();
         }
 
     }
