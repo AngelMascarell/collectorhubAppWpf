@@ -29,6 +29,8 @@ namespace collectorhubAppWpf.ViewModel
             _httpClient.BaseAddress = new Uri("http://localhost:8080/");
             _mangaModel = new MangaModel();
             SelectImageCommand = new RelayCommand(param => SelectImage());
+            GetRandomMangaCommand = new RelayCommand(param => SaveRandomManga());
+
         }
 
         public MangaViewModel(MangaModel mangaModel)
@@ -165,6 +167,19 @@ namespace collectorhubAppWpf.ViewModel
                 }
             }
         }
+
+        private string _successMessage;
+        public string SuccessMessage
+        {
+            get => _successMessage;
+            set
+            {
+                _successMessage = value;
+                OnPropertyChanged(nameof(SuccessMessage));
+            }
+        }
+
+
 
         public async Task<bool> CheckIfTitleExistsAsync(string title)
         {
@@ -347,6 +362,39 @@ namespace collectorhubAppWpf.ViewModel
 
             return await response.Content.ReadAsStringAsync();
         }
+
+        public ICommand GetRandomMangaCommand { get; }
+
+        private async Task SaveRandomManga()
+        {
+            try
+            {
+                var response = await _httpClient.PostAsync("manga/mangadex/saveRandom", null);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("El manga aleatorio se guardó correctamente en la base de datos.",
+                                    "Éxito",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Error: No se pudo guardar el manga aleatorio.",
+                                    "Error",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ocurrió un error al intentar guardar el manga: {ex.Message}",
+                                "Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
+            }
+        }
+
 
         private bool CanSave()
         {

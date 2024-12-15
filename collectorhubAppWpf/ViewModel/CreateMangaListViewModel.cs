@@ -109,7 +109,7 @@ namespace collectorhubAppWpf.ViewModel
                 Mangas.Add(manga);
             }
 
-            MessageBox.Show($"Mangas cargados: {Mangas.Count}");
+            //MessageBox.Show($"Mangas cargados: {Mangas.Count}");
 
         }
 
