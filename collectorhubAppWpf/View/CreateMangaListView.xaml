@@ -50,28 +50,45 @@
             </StackPanel>
 
 
+            <StackPanel Margin="100,0,100,0">
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,0,0,20">
+                    <TextBlock Text="Buscar Mangas" 
+                   FontSize="16" 
+                   FontWeight="SemiBold" 
+                   Margin="0,0,0,5" 
+                   HorizontalAlignment="Center"/>
+                    <TextBox x:Name="SearchTextBox" 
+                 Width="400" 
+                 Height="40" 
+                 Style="{StaticResource TextBoxStyle}"
+                 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+                
+                <TextBlock Text="Seleccionar Mangas" 
+               FontSize="20" 
+               FontWeight="SemiBold" 
+               Margin="0,0,0,10" 
+               HorizontalAlignment="Left"/>
 
-            <TextBlock Text="Seleccionar Mangas" 
-                       FontSize="20" 
-                       FontWeight="SemiBold" 
-                       Margin="100,10,0,10"/>
-
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="100,0,100,0" MaxHeight="400">
-                <ListView ItemsSource="{Binding Mangas}" Background="#F9F9F9" BorderThickness="1" BorderBrush="#D3D3D3">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Padding="10" Margin="5" BorderThickness="1" BorderBrush="#CCCCCC" CornerRadius="5">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                    <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Title}" Margin="0,0,10,0"/>
-                                    <TextBlock Text=" - " Margin="5,0,5,0" />
-                                    <TextBlock Text="{Binding Author}" FontWeight="Bold" />
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollViewer>
-
+                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="300">
+                    <ListView ItemsSource="{Binding FilteredMangas}" 
+                  Background="#F9F9F9" 
+                  BorderThickness="1" 
+                  BorderBrush="#D3D3D3">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="10" Margin="5" BorderThickness="1" BorderBrush="#CCCCCC" CornerRadius="5">
+                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                        <CheckBox IsChecked="{Binding IsSelected}" Content="{Binding Title}" Margin="0,0,10,0"/>
+                                        <TextBlock Text=" - " Margin="5,0,5,0" />
+                                        <TextBlock Text="{Binding Author}" FontWeight="Bold" />
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollViewer>
+            </StackPanel>
 
 
 

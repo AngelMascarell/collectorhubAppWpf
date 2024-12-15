@@ -23,6 +23,19 @@ namespace collectorhubAppWpf.ViewModel
         public ObservableCollection<MangaModel> SelectedMangas { get; set; } = new ObservableCollection<MangaModel>();
         public ICommand AddSelectedMangasCommand { get; }
 
+        public ICollectionView FilteredMangas { get; private set; }
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                OnPropertyChanged(nameof(SearchText));
+                FilteredMangas.Refresh();
+            }
+        }
+
         private string _name;
         private string _description;
 
@@ -45,9 +58,26 @@ namespace collectorhubAppWpf.ViewModel
         public CreateMangaListViewModel()
         {
             _httpClient = new HttpClient();
-            LoadMangas();
+           
             AddSelectedMangasCommand = new RelayCommand(param => AddSelectedMangas());
+
+            FilteredMangas = CollectionViewSource.GetDefaultView(Mangas);
+            FilteredMangas.Filter = FilterManga;
+
+            LoadMangas();
         }
+
+        private bool FilterManga(object item)
+        {
+            if (item is MangaModel manga)
+            {
+                return string.IsNullOrEmpty(SearchText) ||
+                       manga.Title.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ||
+                       manga.Author.Contains(SearchText, StringComparison.OrdinalIgnoreCase);
+            }
+            return false;
+        }
+
 
         private async void AddSelectedMangas()
         {
@@ -108,6 +138,8 @@ namespace collectorhubAppWpf.ViewModel
             {
                 Mangas.Add(manga);
             }
+
+            FilteredMangas.Refresh();
 
             MessageBox.Show($"Mangas cargados: {Mangas.Count}");
 
